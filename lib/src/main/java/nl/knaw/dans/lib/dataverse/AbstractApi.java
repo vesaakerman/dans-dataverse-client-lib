@@ -16,7 +16,9 @@
 package nl.knaw.dans.lib.dataverse;
 
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
 
+import java.io.IOException;
 import java.net.URI;
 
 public abstract class AbstractApi {
@@ -28,7 +30,4 @@ public abstract class AbstractApi {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
     }
-
-
-
 }

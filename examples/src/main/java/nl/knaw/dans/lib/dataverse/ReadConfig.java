@@ -15,19 +15,19 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.Dataverse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.io.FileUtils;
 
-import javax.swing.text.View;
-import java.net.URI;
+public class ReadConfig {
+//    private static String baseUrl;
+//
+//    static {
+//        try {
+//
+//
+//
+//        }
+//
+//    }
 
-public class ViewDataverse {
-    private static final Logger log = LoggerFactory.getLogger(ViewDataverse.class);
 
-    public static void main(String[] args) throws Exception {
-        DataverseClient client = new DataverseClient(new URI("https://dar.dans.knaw.nl/"));
-        DataverseResponse<Dataverse> r = client.dataverse("root").view();
-        log.info("Description = {}", r.getData().getDescription());
-    }
 }

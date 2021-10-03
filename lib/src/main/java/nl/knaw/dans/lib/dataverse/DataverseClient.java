@@ -29,7 +29,7 @@ public class DataverseClient {
     private final HttpClient httpClient;
 
     /**
-     * Create a DataverseClient.
+     * Creates a DataverseClient.
      *
      * @param baseUrl the base URL of the Dataverse instance
      */
@@ -37,6 +37,12 @@ public class DataverseClient {
         this(baseUrl, HttpClients.createDefault());
     }
 
+    /**
+     * Creates a DataverseClient with a custom HttpClient.
+     *
+     * @param baseUrl the base URL of the Dataverse instance
+     * @param httpClient the <code>org.apache.http.client.HttpClient</code> to use when interacting with Dataverse
+     */
     public DataverseClient(URI baseUrl, HttpClient httpClient) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
@@ -50,5 +56,8 @@ public class DataverseClient {
         return new DatasetApi();
     }
 
+    public DataverseApi dataverse(String alias) {
+        return new DataverseApi(baseUrl, httpClient, alias);
+    }
 
 }

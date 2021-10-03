@@ -56,7 +56,7 @@ public class DataverseResponse<D> {
     protected DataverseResponse(String bodyText, Class<D> dataClass, ObjectMapper customMapper) {
         log.trace(bodyText);
         this.bodyText = bodyText;
-        this.dataType = getMapper().getTypeFactory().constructParametricType(DataverseMessage.class, dataClass);
+        this.dataType = getMapper().getTypeFactory().constructParametricType(DataverseEnvelope.class, dataClass);
         this.mapper = customMapper;
     }
 
@@ -67,11 +67,11 @@ public class DataverseResponse<D> {
             return mapper;
     }
 
-    public DataverseMessage<D> getMessage() throws IOException {
+    public DataverseEnvelope<D> getEnvelope() throws IOException {
         return getMapper().readValue(bodyText, dataType);
     }
 
     public D getData() throws IOException {
-        return getMessage().getData();
+        return getEnvelope().getData();
     }
 }

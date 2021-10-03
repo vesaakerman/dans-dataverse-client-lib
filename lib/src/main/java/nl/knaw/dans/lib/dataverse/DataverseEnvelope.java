@@ -17,7 +17,7 @@ package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DataverseMessage<D> {
+public class DataverseEnvelope<D> {
 
     private String status;
     private String message;
