@@ -15,29 +15,60 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpResponse;
+
+import java.io.IOException;
 
 /**
  * Response from Dataverse. It gives access both to the raw HTTP response and the message as an object of one of the types in
- * {@link nl.knaw.dans.lib.dataverse.model}.s
+ * {@link nl.knaw.dans.lib.dataverse.model}.
  *
- * @param <T> the payload of the response
+ * @param <D> the type of the payload of the response message
  */
-public class DataverseResponse<T> {
+public class DataverseResponse<D> {
+
+    private static final ObjectMapper defaultResponseMapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     private final HttpResponse httpResponse;
-    private final T message;
+    private final String entityString;
+    private final JavaType dataType;
 
-    protected DataverseResponse(HttpResponse httpResponse, T message) {
+    protected DataverseResponse(HttpResponse httpResponse, Class<D> dataClass, ObjectMapper customMapper) {
         this.httpResponse = httpResponse;
-        this.message = message;
+        this.entityString = null;
+        this.dataType = getMapper().getTypeFactory().constructParametricType(DataverseMessage.class, dataClass);
+        this.mapper = customMapper;
+    }
+
+    protected DataverseResponse(String entityString, Class<D> dataClass, ObjectMapper customMapper) {
+        this.httpResponse = null;
+        this.entityString = entityString;
+        this.dataType = getMapper().getTypeFactory().constructParametricType(DataverseMessage.class, dataClass);
+        this.mapper = customMapper;
+    }
+
+    private ObjectMapper getMapper() {
+        if (mapper == null)
+            return defaultResponseMapper;
+        else
+            return mapper;
     }
 
     public HttpResponse getHttpResponse() {
         return httpResponse;
     }
 
-    public T getMessage() {
-        return message;
+    public DataverseMessage<D> getMessage() throws IOException {
+        if (httpResponse == null)
+            return getMapper().readValue(entityString, dataType);
+        else
+            return getMapper().readValue(httpResponse.getEntity().getContent(), dataType);
+    }
+
+    public D getData() throws IOException {
+        return getMessage().getData();
     }
 }

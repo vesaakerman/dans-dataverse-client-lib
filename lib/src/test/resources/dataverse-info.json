@@ -1,0 +1,12 @@
+{
+  "status": "OK",
+  "data": {
+    "id": 1,
+    "alias": "root",
+    "name": "DANS Archaeology Data Station (dev)",
+    "permissionRoot": true,
+    "description": "The root dataverse.",
+    "dataverseType": "UNCATEGORIZED",
+    "creationDate": "2021-10-02T12:22:05Z"
+  }
+}

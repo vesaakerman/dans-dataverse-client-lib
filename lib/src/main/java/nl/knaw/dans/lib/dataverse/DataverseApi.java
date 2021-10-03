@@ -15,17 +15,22 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import org.apache.http.HttpResponse;
+import nl.knaw.dans.lib.dataverse.model.Dataverse;
 import org.apache.http.client.HttpClient;
 
 import java.net.URI;
 
 public class DataverseApi extends AbstractApi {
+
     private String alias;
 
     public DataverseApi(URI baseUrl, HttpClient httpClient, String alias) {
         super(baseUrl, httpClient);
     }
 
-
+    public DataverseResponse<Dataverse> view() {
+        //        HttpPost post = new HttpGet(baseUrl.resolve(invocationId));
+        //        return httpClient.execute(post);
+        return null;
+    }
 }
