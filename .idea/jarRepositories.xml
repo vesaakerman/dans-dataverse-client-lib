@@ -19,6 +19,11 @@
     <remote-repository>
       <option name="id" value="DANS" />
       <option name="name" value="DANS" />
+      <option name="url" value="https://maven.dans.knaw.nl/releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="DANS" />
+      <option name="name" value="DANS" />
       <option name="url" value="http://maven.dans.knaw.nl/" />
     </remote-repository>
     <remote-repository>

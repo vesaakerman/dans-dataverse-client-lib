@@ -16,39 +16,19 @@
 package nl.knaw.dans.lib.dataverse;
 
 import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClients;
 
 import java.net.URI;
 
-/**
- * Object that lets your code talk to a Dataverse instance.
- */
-public class DataverseClient {
+public abstract class AbstractApi {
 
-    private final URI baseUrl;
-    private final HttpClient httpClient;
+    protected final URI baseUrl;
+    protected final HttpClient httpClient;
 
-    /**
-     * Create a DataverseClient.
-     *
-     * @param baseUrl the base URL of the Dataverse instance
-     */
-    public DataverseClient(URI baseUrl) {
-        this(baseUrl, HttpClients.createDefault());
-    }
-
-    public DataverseClient(URI baseUrl, HttpClient httpClient) {
+    public AbstractApi(URI baseUrl, HttpClient httpClient) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
     }
 
-    public WorkflowsApi workflows() {
-        return new WorkflowsApi(baseUrl.resolve("api/workflows/"), httpClient);
-    }
-
-    public DatasetApi dataset(String pid) {
-        return new DatasetApi();
-    }
 
 
 }

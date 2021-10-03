@@ -15,6 +15,17 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-public class Dummy {
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+
+import java.net.URI;
+
+public class DataverseApi extends AbstractApi {
+    private String alias;
+
+    public DataverseApi(URI baseUrl, HttpClient httpClient, String alias) {
+        super(baseUrl, httpClient);
+    }
+
 
 }
