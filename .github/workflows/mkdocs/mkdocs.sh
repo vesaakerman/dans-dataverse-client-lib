@@ -30,7 +30,7 @@ python3 build.py pack
 popd
 echo "DONE installing DANS mkdocs theme."
 
-./move-javadocs.sh
+./add-javadocs.sh
 
 echo "START deploying docs to GitHub pages..."
 mkdocs gh-deploy --force
