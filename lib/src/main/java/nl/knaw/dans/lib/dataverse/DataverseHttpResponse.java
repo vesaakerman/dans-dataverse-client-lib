@@ -15,41 +15,22 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 
-public class DataverseMessage<D> {
+import java.io.IOException;
 
-    private String status;
-    private String message;
-    private D data;
+public class DataverseHttpResponse<D> extends DataverseResponse<D> {
 
-    @JsonProperty
-    public String getStatus() {
-        return status;
+    private final HttpResponse httpResponse;
+
+    protected DataverseHttpResponse(HttpResponse httpResponse, Class<D> dataClass, ObjectMapper customMapper) throws IOException {
+        super(EntityUtils.toString(httpResponse.getEntity()), dataClass, customMapper);
+        this.httpResponse = httpResponse;
     }
 
-    @JsonProperty
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @JsonProperty
-    public String getMessage() {
-        return message;
-    }
-
-    @JsonProperty
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    @JsonProperty
-    public D getData() {
-        return data;
-    }
-
-    @JsonProperty
-    public void setData(D data) {
-        this.data = data;
+    public HttpResponse getHttpResponse() {
+        return httpResponse;
     }
 }

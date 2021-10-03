@@ -3,7 +3,7 @@
   "data": {
     "id": 1,
     "alias": "root",
-    "name": "DANS Archaeology Data Station (dev)",
+    "name": "Dataverse Name",
     "permissionRoot": true,
     "description": "The root dataverse.",
     "dataverseType": "UNCATEGORIZED",
