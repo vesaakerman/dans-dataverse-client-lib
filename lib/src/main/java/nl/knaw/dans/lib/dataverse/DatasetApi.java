@@ -17,4 +17,23 @@ package nl.knaw.dans.lib.dataverse;
 
 public class DatasetApi {
 
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#get-json-representation-of-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-versions-of-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#get-version-of-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#export-metadata-of-a-dataset-in-various-formats
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#schema-org-json-ld
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-files-in-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#view-dataset-files-and-folders-as-a-directory-index
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-all-metadata-blocks-for-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-single-metadata-block-for-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#update-metadata-for-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#edit-dataset-metadata
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-dataset-metadata
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-dataset-draft
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#set-citation-date-field-type-for-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#revert-citation-date-field-type-to-default-for-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-role-assignments-in-a-dataset
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#assign-a-new-role-on-a-dataset
+
 }

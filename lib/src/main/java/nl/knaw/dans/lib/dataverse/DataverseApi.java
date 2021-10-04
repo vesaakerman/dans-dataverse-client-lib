@@ -40,6 +40,8 @@ public class DataverseApi extends AbstractApi {
         this.subPath = Paths.get("api/dataverses/").resolve(alias);
     }
 
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-dataverse-collection
+
     /**
      * See [Dataverse API Guide].
      *
@@ -54,6 +56,25 @@ public class DataverseApi extends AbstractApi {
         return httpClientWrapper.get(subPath, Dataverse.class);
     }
 
-
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#show-contents-of-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#report-the-data-file-size-of-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-roles-defined-in-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-facets-configured-for-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#set-facets-for-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-new-role-in-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-role-assignments-in-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#assign-default-role-to-user-creating-a-dataset-in-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#assign-a-new-role-on-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-role-assignment-from-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-metadata-blocks-defined-on-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#define-metadata-blocks-for-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#determine-if-a-dataverse-collection-inherits-its-metadata-blocks-from-its-parent
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#configure-a-dataverse-collection-to-inherit-its-metadata-blocks-from-its-parent
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-dataset-in-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#import-a-dataset-into-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#import-a-dataset-into-a-dataverse-installation-with-a-ddi-file
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataverse-collection
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#retrieve-guestbook-responses-for-a-dataverse-collection
 
 }

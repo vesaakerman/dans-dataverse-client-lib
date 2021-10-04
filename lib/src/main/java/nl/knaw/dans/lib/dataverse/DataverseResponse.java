@@ -17,6 +17,7 @@ package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import nl.knaw.dans.lib.dataverse.model.DataverseEnvelope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
