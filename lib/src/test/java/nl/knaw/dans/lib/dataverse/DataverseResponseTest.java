@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.knaw.dans.lib.dataverse.model.Dataverse;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
@@ -24,11 +25,12 @@ import java.io.File;
 import java.nio.charset.StandardCharsets;
 
 public class DataverseResponseTest {
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     @Test
     public void simpleDataverseViewReponseCanBeDeserialized() throws Exception {
         DataverseResponse<Dataverse> r = new DataverseResponse<>(FileUtils.readFileToString(new File("src/test/resources/dataverse-response/dataverse-info.json"), StandardCharsets.UTF_8),
-            Dataverse.class);
+            Dataverse.class, mapper);
         Assertions.assertEquals("root", r.getData().getAlias());
         Assertions.assertEquals("Dataverse Name", r.getData().getName());
     }

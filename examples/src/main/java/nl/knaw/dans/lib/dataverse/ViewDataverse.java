@@ -22,11 +22,11 @@ import org.slf4j.LoggerFactory;
 import javax.swing.text.View;
 import java.net.URI;
 
-public class ViewDataverse {
+public class ViewDataverse  extends ReadConfig {
     private static final Logger log = LoggerFactory.getLogger(ViewDataverse.class);
 
     public static void main(String[] args) throws Exception {
-        DataverseClient client = new DataverseClient(new URI("https://dar.dans.knaw.nl/"));
+        DataverseClient client = new DataverseClient(config);
         DataverseResponse<Dataverse> r = client.dataverse("root").view();
         log.info("Description = {}", r.getData().getDescription());
     }

@@ -15,32 +15,23 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.knaw.dans.lib.dataverse.model.ResumeMessage;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
-import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
-public class WorkflowsApi {
+public class WorkflowsApi extends AbstractApi {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final Path subPath = Paths.get("api/workflows/");
 
-    private final URI baseUrl;
-    private final HttpClient httpClient;
-
-    public WorkflowsApi(URI baseUrl, HttpClient httpClient) {
-        this.baseUrl = baseUrl;
-        this.httpClient = httpClient;
+    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
+        super(httpClientWrapper);
     }
 
     public HttpResponse resume(String invocationId, ResumeMessage resumeMessage) throws IOException {
-        HttpPost post = new HttpPost(baseUrl.resolve(invocationId));
-        post.setEntity(new StringEntity(mapper.writeValueAsString(resumeMessage)));
-        return httpClient.execute(post);
+        return httpClientWrapper.post(subPath.resolve(invocationId), resumeMessage);
     }
 
 }

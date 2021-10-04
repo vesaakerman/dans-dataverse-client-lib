@@ -25,16 +25,16 @@ import java.io.IOException;
 /**
  * Response from Dataverse. A typical response from Dataverse is a JSON document with the following format:
  *
- * <pre>
- * {
- *      "status": "OK",
- *      "data": {
- *          // A JSON object for the specific API endpoint
- *      }
+ * <!-- @formatter:off -->
+ * ```json
+ *  {
+ *    "status": "OK",
+ *    "data": {
+ *        "myfield": "myvalue"
+ *    }
  *  }
- * </pre>
- *
- *
+ * ```
+ * <!-- @formatter:on -->
  *
  * {@link nl.knaw.dans.lib.dataverse.model}.
  *
@@ -43,32 +43,24 @@ import java.io.IOException;
 public class DataverseResponse<D> {
 
     private static final Logger log = LoggerFactory.getLogger(DataverseResponse.class);
-    private static final ObjectMapper defaultResponseMapper = new ObjectMapper();
     private final ObjectMapper mapper;
 
     private final String bodyText;
     private final JavaType dataType;
 
-    protected DataverseResponse(String bodyText, Class<D> dataClass) {
-        this(bodyText, dataClass, null);
-    }
-
-    protected DataverseResponse(String bodyText, Class<D> dataClass, ObjectMapper customMapper) {
+    protected DataverseResponse(String bodyText, Class<D> dataClass, ObjectMapper mapper) {
         log.trace(bodyText);
         this.bodyText = bodyText;
-        this.dataType = getMapper().getTypeFactory().constructParametricType(DataverseEnvelope.class, dataClass);
-        this.mapper = customMapper;
+        this.mapper = mapper;
+        this.dataType = mapper.getTypeFactory().constructParametricType(DataverseEnvelope.class, dataClass);
     }
 
-    private ObjectMapper getMapper() {
-        if (mapper == null)
-            return defaultResponseMapper;
-        else
-            return mapper;
-    }
-
+    /**
+     * @return
+     * @throws IOException
+     */
     public DataverseEnvelope<D> getEnvelope() throws IOException {
-        return getMapper().readValue(bodyText, dataType);
+        return mapper.readValue(bodyText, dataType);
     }
 
     public D getData() throws IOException {

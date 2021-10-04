@@ -15,19 +15,27 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 public class ReadConfig {
-//    private static String baseUrl;
-//
-//    static {
-//        try {
-//
-//
-//
-//        }
-//
-//    }
 
+    protected static DataverseClientConfig config;
+
+    static {
+        try {
+            PropertiesConfiguration props = new PropertiesConfiguration("dataverse.properties");
+            config = new DataverseClientConfig(new URI(props.getString("baseUrl")), props.getString("apiToken"));
+        }
+        catch (ConfigurationException e) {
+            e.printStackTrace();
+        }
+        catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

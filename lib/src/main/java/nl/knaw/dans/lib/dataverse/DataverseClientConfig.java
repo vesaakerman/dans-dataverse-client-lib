@@ -15,11 +15,28 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-abstract class AbstractApi {
+import java.net.URI;
 
-    protected final HttpClientWrapper httpClientWrapper;
+public class DataverseClientConfig {
+    private final URI baseUrl;
+    private final String apiToken;
 
-    protected AbstractApi(HttpClientWrapper httpClientWrapper) {
-        this.httpClientWrapper = httpClientWrapper;
+    /**
+     * Configuration data for the {@link DataverseClient}.
+     *
+     * @param baseUrl the base URL of the Dataverse server to communicate with
+     * @param apiToken the API token used for authorization
+     */
+    public DataverseClientConfig(URI baseUrl, String apiToken) {
+        this.baseUrl = baseUrl;
+        this.apiToken = apiToken;
+    }
+
+    public URI getBaseUrl() {
+        return baseUrl;
+    }
+
+    public String getApiToken() {
+        return apiToken;
     }
 }
