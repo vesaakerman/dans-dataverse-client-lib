@@ -15,15 +15,19 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.Dataverse;
+import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ViewDataverse  extends CreateClient {
-    private static final Logger log = LoggerFactory.getLogger(ViewDataverse.class);
+import java.util.List;
+
+public class GetDatasetVersion extends CreateClient {
+
+    private static final Logger log = LoggerFactory.getLogger(GetDatasetVersion.class);
 
     public static void main(String[] args) throws Exception {
-        DataverseResponse<Dataverse> r = client.dataverse("root").view();
-        log.info("Description = {}", r.getData().getDescription());
+        DataverseResponse<List<DatasetVersion>> r = client.dataset(args[0]).getVersion(":latest");
+        log.info("Get create-time = {}", r.getData().get(0).getCreateTime());
+        log.info("Get metadatablocks = {}", r.getData().get(0).getMetadataBlocks());
     }
 }

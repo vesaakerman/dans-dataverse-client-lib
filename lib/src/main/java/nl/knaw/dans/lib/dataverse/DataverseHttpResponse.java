@@ -25,8 +25,8 @@ public class DataverseHttpResponse<D> extends DataverseResponse<D> {
 
     private final HttpResponse httpResponse;
 
-    protected DataverseHttpResponse(HttpResponse httpResponse, Class<D> dataClass, ObjectMapper customMapper) throws IOException {
-        super(EntityUtils.toString(httpResponse.getEntity()), dataClass, customMapper);
+    protected DataverseHttpResponse(HttpResponse httpResponse, ObjectMapper customMapper, Class<?>... dataClass) throws IOException {
+        super(EntityUtils.toString(httpResponse.getEntity()), customMapper, dataClass);
         this.httpResponse = httpResponse;
     }
 

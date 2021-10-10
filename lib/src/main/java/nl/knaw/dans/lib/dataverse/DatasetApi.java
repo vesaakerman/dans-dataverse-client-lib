@@ -15,11 +15,58 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-public class DatasetApi {
+import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.List;
+
+public class DatasetApi extends AbstractApi {
+
+    private static final Logger log = LoggerFactory.getLogger(DatasetApi.class);
+    private static final String persistendId = ":persistentId/";
+
+    private final Path targetBase;
+    private final String id;
+    private final boolean isPersistentId;
+
+    protected DatasetApi(HttpClientWrapper httpClientWrapper, String id, boolean isPersistentId) {
+        super(httpClientWrapper);
+        this.targetBase = Paths.get("api/datasets/");
+        this.id = id;
+        this.isPersistentId = isPersistentId;
+    }
+
 
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#get-json-representation-of-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-versions-of-a-dataset
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#get-version-of-a-dataset
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#get-version-of-a-dataset
+     *
+     */
+    public DataverseResponse<List<DatasetVersion>> getVersion(String version) throws IOException, DataverseException {
+        return getVersionedFromTarget("", version, List.class, DatasetVersion.class);
+        // getVersionedFromTarget("", version, Arrays.asList(List.class, DatasetVersion.class))
+    }
+
+    private <D> DataverseHttpResponse<D> getVersionedFromTarget(String endPoint, String version, Class<?>... outputClass) throws IOException, DataverseException {
+        log.trace("ENTER");
+        if (isPersistentId) {
+            HashMap<String, String> parameters = new HashMap<>();
+            parameters.put("persistentId", id);
+            return httpClientWrapper.get(targetBase.resolve(persistendId).resolve("versions/").resolve(endPoint), parameters, outputClass);
+        } else {
+            return httpClientWrapper.get(targetBase.resolve(id).resolve("versions/").resolve(endPoint), outputClass);
+        }
+    }
+
+
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#export-metadata-of-a-dataset-in-various-formats
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#schema-org-json-ld
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-files-in-a-dataset

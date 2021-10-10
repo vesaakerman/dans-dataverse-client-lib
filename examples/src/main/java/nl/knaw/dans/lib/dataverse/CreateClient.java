@@ -21,14 +21,15 @@ import org.apache.commons.configuration.PropertiesConfiguration;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class ReadConfig {
+public class CreateClient {
 
-    protected static DataverseClientConfig config;
+    protected static DataverseClient client;
 
     static {
         try {
-            PropertiesConfiguration props = new PropertiesConfiguration("dataverse.properties");
-            config = new DataverseClientConfig(new URI(props.getString("baseUrl")), props.getString("apiToken"));
+            PropertiesConfiguration props = new PropertiesConfiguration("examples/dataverse.properties");
+            DataverseClientConfig config = new DataverseClientConfig(new URI(props.getString("baseUrl")), props.getString("apiToken"));
+            client = new DataverseClient(config);
         }
         catch (ConfigurationException e) {
             e.printStackTrace();

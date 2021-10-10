@@ -15,6 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.util.List;
+import java.util.Map;
+
 public class DatasetVersion {
     private int id;
     private int datasetId;
@@ -28,12 +33,163 @@ public class DatasetVersion {
     private String releaseTime; // TODO: timestamp?
     private String createTime; // TODO: timestamp?
     private boolean fileAccessRequest;
-//    private termsOfUse: Option[String] = None,
-//    license: Option[String] = None,
-//    protocol: Option[String] = None,
-//    authority: Option[String] = None,
-//    identifier: Option[String] = None,
-//    metadataBlocks: MetadataBlocks = Map.empty,
-//    files: List[FileMeta] = List.empty
+    private String termsOfUse;
+    private License license;
+    private String protocol;
+    private String authority;
+    private String identifier;
+    private Map<String, Object> metadataBlocks;
+    private List<Object> files;
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getDatasetId() {
+        return datasetId;
+    }
+
+    public void setDatasetId(int datasetId) {
+        this.datasetId = datasetId;
+    }
+
+    public String getDatasetPersistentId() {
+        return datasetPersistentId;
+    }
+
+    public void setDatasetPersistentId(String datasetPersistentId) {
+        this.datasetPersistentId = datasetPersistentId;
+    }
+
+    public String getStorageIdentifier() {
+        return storageIdentifier;
+    }
+
+    public void setStorageIdentifier(String storageIdentifier) {
+        this.storageIdentifier = storageIdentifier;
+    }
+
+    public int getVersionNumber() {
+        return versionNumber;
+    }
+
+    public void setVersionNumber(int versionNumber) {
+        this.versionNumber = versionNumber;
+    }
+
+    public int getVersionMinorNumber() {
+        return versionMinorNumber;
+    }
+
+    public void setVersionMinorNumber(int versionMinorNumber) {
+        this.versionMinorNumber = versionMinorNumber;
+    }
+
+    public String getVersionState() {
+        return versionState;
+    }
+
+    public void setVersionState(String versionState) {
+        this.versionState = versionState;
+    }
+
+    public String getUnf() {
+        return unf;
+    }
+
+    public void setUnf(String unf) {
+        this.unf = unf;
+    }
+
+    public String getLastUpdateTime() {
+        return lastUpdateTime;
+    }
+
+    public void setLastUpdateTime(String lastUpdateTime) {
+        this.lastUpdateTime = lastUpdateTime;
+    }
+
+    public String getReleaseTime() {
+        return releaseTime;
+    }
+
+    public void setReleaseTime(String releaseTime) {
+        this.releaseTime = releaseTime;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public boolean isFileAccessRequest() {
+        return fileAccessRequest;
+    }
+
+    public void setFileAccessRequest(boolean fileAccessRequest) {
+        this.fileAccessRequest = fileAccessRequest;
+    }
+
+    public String getTermsOfUse() {
+        return termsOfUse;
+    }
+
+    public void setTermsOfUse(String termsOfUse) {
+        this.termsOfUse = termsOfUse;
+    }
+
+    public License getLicense() {
+        return license;
+    }
+
+    public void setLicense(License license) {
+        this.license = license;
+    }
+
+    public String getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(String protocol) {
+        this.protocol = protocol;
+    }
+
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public String getIdentifier() {
+        return identifier;
+    }
+
+    public void setIdentifier(String identifier) {
+        this.identifier = identifier;
+    }
+
+    public Map<String, Object> getMetadataBlocks() {
+        return metadataBlocks;
+    }
+
+    public void setMetadataBlocks(Map<String, Object> metadataBlocks) {
+        this.metadataBlocks = metadataBlocks;
+    }
+
+    public List<Object> getFiles() {
+        return files;
+    }
+
+    public void setFiles(List<Object> files) {
+        this.files = files;
+    }
 }

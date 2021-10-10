@@ -17,22 +17,32 @@ package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.knaw.dans.lib.dataverse.model.Dataverse;
+import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class DataverseResponseTest {
+
     private static final ObjectMapper mapper = new ObjectMapper();
 
     @Test
     public void simpleDataverseViewReponseCanBeDeserialized() throws Exception {
         DataverseResponse<Dataverse> r = new DataverseResponse<>(FileUtils.readFileToString(new File("src/test/resources/dataverse-response/dataverse-info.json"), StandardCharsets.UTF_8),
-            Dataverse.class, mapper);
+            mapper, Dataverse.class);
         Assertions.assertEquals("root", r.getData().getAlias());
         Assertions.assertEquals("Dataverse Name", r.getData().getName());
+    }
+
+    @Test
+    public void nestedTypeParametersCanBeDeserialized() throws Exception {
+        DataverseResponse<List<DatasetVersion>> r = new DataverseResponse<>(FileUtils.readFileToString(new File("src/test/resources/dataverse-response/test2.json"), StandardCharsets.UTF_8),
+            mapper, List.class, DatasetVersion.class);
+        System.out.println(r.getData().get(0).getCreateTime());
     }
 
 }

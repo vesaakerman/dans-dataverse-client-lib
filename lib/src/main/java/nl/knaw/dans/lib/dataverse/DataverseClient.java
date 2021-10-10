@@ -51,7 +51,7 @@ public class DataverseClient {
     }
 
     public DatasetApi dataset(String pid) {
-        return new DatasetApi();
+        return new DatasetApi(httpClientWrapper, pid, true);
     }
 
     public DataverseApi dataverse(String alias) {

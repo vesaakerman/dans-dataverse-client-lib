@@ -17,6 +17,7 @@ package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import nl.knaw.dans.lib.dataverse.model.DataverseEnvelope;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,11 +50,26 @@ public class DataverseResponse<D> {
     private final String bodyText;
     private final JavaType dataType;
 
-    protected DataverseResponse(String bodyText, Class<D> dataClass, ObjectMapper mapper) {
+    protected DataverseResponse(String bodyText, ObjectMapper mapper, Class<?>... dataClass) {
+        log.trace("ENTER");
         log.trace(bodyText);
         this.bodyText = bodyText;
         this.mapper = mapper;
-        this.dataType = mapper.getTypeFactory().constructParametricType(DataverseEnvelope.class, dataClass);
+        TypeFactory typeFactory = mapper.getTypeFactory();
+        if (dataClass.length == 2) {
+            JavaType inner = typeFactory.constructParametricType(dataClass[0], dataClass[1]);
+            this.dataType =  typeFactory.constructParametricType(DataverseEnvelope.class, inner);
+        } else {
+            this.dataType = typeFactory.constructParametricType(DataverseEnvelope.class, dataClass[0]);
+        }
+    }
+
+
+    // Must be static, otherwise compiler complains about passing result into 'this()' call
+    private static JavaType constuctJavaTypeForContainerClass(Class<?> containerClass, Class<?> elementClass, ObjectMapper mapper) {
+        TypeFactory typeFactory = mapper.getTypeFactory();
+        JavaType inner = typeFactory.constructParametricType(containerClass, elementClass);
+        return typeFactory.constructParametricType(DataverseEnvelope.class, inner);
     }
 
     /**
