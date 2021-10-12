@@ -13,18 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import java.util.List;
+public interface SingleValueField {
 
-public class TestObject<T> {
-    private List<T> myList;
+    String getTypeClass();
 
-    public List<T> getMyList() {
-        return myList;
-    }
+    String getTypeName();
 
-    public void setMyList(List<T> myList) {
-        this.myList = myList;
-    }
+    String getValue();
+
 }

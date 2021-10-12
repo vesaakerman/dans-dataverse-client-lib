@@ -13,18 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
 import java.util.List;
 
-public class TestObject<T> {
-    private List<T> myList;
+public class ControlledMultiValueField extends MetadataField {
+    private List<String> value;
 
-    public List<T> getMyList() {
-        return myList;
+    public ControlledMultiValueField() {
     }
 
-    public void setMyList(List<T> myList) {
-        this.myList = myList;
+    public ControlledMultiValueField(String typeClass, String typeName, boolean multiple, List<String> value) {
+        super(typeClass, typeName, multiple);
+        this.value = value;
+    }
+
+    public List<String> getValue() {
+        return value;
+    }
+
+    public void setValue(List<String> value) {
+        this.value = value;
     }
 }

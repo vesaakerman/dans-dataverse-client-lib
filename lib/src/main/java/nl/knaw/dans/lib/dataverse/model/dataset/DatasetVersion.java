@@ -15,12 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 import java.util.Map;
 
 public class DatasetVersion {
+
     private int id;
     private int datasetId;
     private String datasetPersistentId;
@@ -38,7 +37,7 @@ public class DatasetVersion {
     private String protocol;
     private String authority;
     private String identifier;
-    private Map<String, Object> metadataBlocks;
+    private Map<String, MetadataBlock> metadataBlocks;
     private List<Object> files;
 
     public int getId() {
@@ -177,11 +176,11 @@ public class DatasetVersion {
         this.identifier = identifier;
     }
 
-    public Map<String, Object> getMetadataBlocks() {
+    public Map<String, MetadataBlock> getMetadataBlocks() {
         return metadataBlocks;
     }
 
-    public void setMetadataBlocks(Map<String, Object> metadataBlocks) {
+    public void setMetadataBlocks(Map<String, MetadataBlock> metadataBlocks) {
         this.metadataBlocks = metadataBlocks;
     }
 

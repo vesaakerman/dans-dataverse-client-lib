@@ -1,0 +1,9 @@
+{
+  "typeName": "primitiveMulti",
+  "multiple": true,
+  "typeClass": "primitive",
+  "value": [
+    "Test1",
+    "Test2"
+  ]
+}

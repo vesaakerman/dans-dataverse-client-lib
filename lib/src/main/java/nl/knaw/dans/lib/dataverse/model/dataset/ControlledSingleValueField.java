@@ -13,18 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import java.util.List;
+public class ControlledSingleValueField extends MetadataField implements SingleValueField{
 
-public class TestObject<T> {
-    private List<T> myList;
+    private String value;
 
-    public List<T> getMyList() {
-        return myList;
+    public ControlledSingleValueField() {
     }
 
-    public void setMyList(List<T> myList) {
-        this.myList = myList;
+    public ControlledSingleValueField(String typeClass, String typeName, boolean multiple, String value) {
+        super(typeClass, typeName, multiple);
+        this.value = value;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }

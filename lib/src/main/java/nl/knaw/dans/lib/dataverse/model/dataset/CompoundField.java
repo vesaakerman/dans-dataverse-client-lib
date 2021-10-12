@@ -13,18 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
 import java.util.List;
+import java.util.Map;
 
-public class TestObject<T> {
-    private List<T> myList;
+public class CompoundField extends MetadataField {
 
-    public List<T> getMyList() {
-        return myList;
+    private List<Map<String, SingleValueField>> value;
+
+    public CompoundField() {
     }
 
-    public void setMyList(List<T> myList) {
-        this.myList = myList;
+    public CompoundField(String typeClass, String typeName, boolean multiple, List<Map<String, SingleValueField>> value) {
+        super(typeClass, typeName, multiple);
+        this.value = value;
+    }
+
+    public List<Map<String, SingleValueField>> getValue() {
+        return value;
+    }
+
+    public void setValue(List<Map<String, SingleValueField>> value) {
+        this.value = value;
     }
 }

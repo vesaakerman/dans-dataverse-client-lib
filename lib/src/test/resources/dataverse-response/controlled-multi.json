@@ -1,0 +1,9 @@
+{
+  "typeName": "controlledMulti",
+  "multiple": true,
+  "typeClass": "controlledVocabulary",
+  "value": [
+    "Test1",
+    "Test2"
+  ]
+}

@@ -16,10 +16,13 @@
 package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import nl.knaw.dans.lib.dataverse.model.Dataverse;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
+import nl.knaw.dans.lib.dataverse.model.dataset.MetadataField;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -28,7 +31,15 @@ import java.util.List;
 
 public class DataverseResponseTest {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private ObjectMapper mapper;
+
+    @BeforeEach
+    public void beforeEach() {
+        mapper = new ObjectMapper();
+        SimpleModule module = new SimpleModule();
+        module.addDeserializer(MetadataField.class, new MetadataFieldDeserializer());
+        mapper.registerModule(module);
+    }
 
     @Test
     public void simpleDataverseViewReponseCanBeDeserialized() throws Exception {
@@ -42,6 +53,7 @@ public class DataverseResponseTest {
     public void nestedTypeParametersCanBeDeserialized() throws Exception {
         DataverseResponse<List<DatasetVersion>> r = new DataverseResponse<>(FileUtils.readFileToString(new File("src/test/resources/dataverse-response/test2.json"), StandardCharsets.UTF_8),
             mapper, List.class, DatasetVersion.class);
+        // TODO: REPLACE WITH ASSERTION
         System.out.println(r.getData().get(0).getCreateTime());
     }
 
