@@ -27,6 +27,8 @@ public class DataverseHttpResponse<D> extends DataverseResponse<D> {
 
     protected DataverseHttpResponse(HttpResponse httpResponse, ObjectMapper customMapper, Class<?>... dataClass) throws IOException {
         super(EntityUtils.toString(httpResponse.getEntity()), customMapper, dataClass);
+        if (dataClass.length > 2)
+            throw new IllegalArgumentException("Currently no more than one nested parameter type supported");
         this.httpResponse = httpResponse;
     }
 

@@ -16,6 +16,7 @@
 package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
@@ -50,6 +51,25 @@ class HttpClientWrapper {
         this.config = config;
         this.httpClient = httpClient;
         this.mapper = mapper;
+    }
+
+    public HttpResponse postString(Path subPath, String s, String mediaType, Map<String, String> parameters) throws IOException {
+        HttpPost post = new HttpPost(buildURi(subPath, parameters));
+        post.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
+        post.setEntity(new StringEntity(s));
+        return httpClient.execute(post);
+    }
+
+    public HttpResponse postJsonString(Path subPath, String s, Map<String, String> parameters) throws IOException {
+        return postString(subPath, s, "application/json", parameters);
+    }
+
+    public HttpResponse postJsonLdString(Path subPath, String s, Map<String, String> parameters) throws IOException {
+        return postString(subPath, s, "application/json-ld", parameters);
+    }
+
+    public <T> DataverseHttpResponse<T> postModelObjectAsJson(Path subPath, T modelObject, Map<String, String> parameters, Class<?>... c) throws IOException {
+        return new DataverseHttpResponse<T>(postJsonString(subPath, mapper.writeValueAsString(modelObject), parameters), mapper, c);
     }
 
     public <T> HttpResponse post(Path subPath, T json) throws IOException {
