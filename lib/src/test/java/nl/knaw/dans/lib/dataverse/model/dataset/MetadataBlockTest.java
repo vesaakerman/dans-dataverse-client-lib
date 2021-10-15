@@ -15,22 +15,31 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class MetadataBlockTest extends ModelDatasetMapperFixture {
     private static final Class<MetadataBlock> classUnderTest = MetadataBlock.class;
 
     @Test
     public void canDeserialize() throws Exception {
-        MetadataBlock f = mapper.readValue(getTestJsonFileFor(classUnderTest), classUnderTest);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        MetadataBlock mb = mapper.readValue(getTestJsonFileFor(classUnderTest), classUnderTest);
+        assertEquals(classUnderTest, mb.getClass());
+        assertEquals("Citation Metadata", mb.getDisplayName());
+        assertEquals("citation", mb.getName());
+        List<MetadataField> fields = mb.getFields();
+        assertEquals(2, fields.size());
+        assertEquals("title", fields.get(0).getTypeName());
+        assertEquals("author", fields.get(1).getTypeName());
     }
 
     @Test
     public void roundTrip() throws Exception {
-        MetadataBlock f = roundTrip(getTestJsonFileFor(classUnderTest), classUnderTest);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        MetadataBlock mb = roundTrip(getTestJsonFileFor(classUnderTest), classUnderTest);
+        assertEquals(classUnderTest, mb.getClass());
     }
 
 }

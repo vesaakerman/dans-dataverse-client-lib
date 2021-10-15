@@ -15,6 +15,26 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import java.net.URI;
+
 class LicenseTest extends ModelDatasetMapperFixture {
+    private static final Class<License> classUnderTest = License.class;
+
+    @Test
+    public void canDeserialize() throws Exception {
+        License license = mapper.readValue(getTestJsonFileFor(classUnderTest), classUnderTest);
+        assertEquals(classUnderTest, license.getClass());
+        assertEquals("CC0", license.getLabel());
+        assertEquals(new URI("http://creativecommons.org/publicdomain/zero/1.0"), license.getUri());
+    }
+
+    @Test
+    public void roundTrip() throws Exception {
+        License license = roundTrip(getTestJsonFileFor(classUnderTest), classUnderTest);
+        assertEquals(classUnderTest, license.getClass());
+    }
 
 }

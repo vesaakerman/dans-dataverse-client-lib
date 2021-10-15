@@ -59,4 +59,8 @@ public class MapperFixture {
     protected File getTestJsonFileFor(Class<?> classUnderTest) {
         return new File(testFileDirectory, classUnderTest.getSimpleName() + ".json");
     }
+
+    protected File getTestJsonFileFor(Class<?> classUnderTest, String suffix) {
+        return new File(testFileDirectory, classUnderTest.getSimpleName() + "-" + suffix + ".json");
+    }
 }

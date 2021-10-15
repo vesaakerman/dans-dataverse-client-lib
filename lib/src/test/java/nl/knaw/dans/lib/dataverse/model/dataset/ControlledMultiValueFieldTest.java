@@ -15,8 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ControlledMultiValueFieldTest extends ModelDatasetMapperFixture {
     private static final Class<?> classUnderTest = ControlledMultiValueField.class;
@@ -24,13 +27,15 @@ class ControlledMultiValueFieldTest extends ModelDatasetMapperFixture {
     @Test
     public void canDeserialize() throws Exception {
         MetadataField f = mapper.readValue(getTestJsonFileFor(classUnderTest), MetadataField.class);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        assertEquals(classUnderTest, f.getClass());
+        ControlledMultiValueField cmvf = (ControlledMultiValueField) f;
+        assertEquals(Arrays.asList("Test1", "Test2"), cmvf.getValue());
     }
 
     @Test
     public void roundTrip() throws Exception {
         MetadataField f = roundTrip(getTestJsonFileFor(classUnderTest), MetadataField.class);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        assertEquals(classUnderTest, f.getClass());
     }
 
 }

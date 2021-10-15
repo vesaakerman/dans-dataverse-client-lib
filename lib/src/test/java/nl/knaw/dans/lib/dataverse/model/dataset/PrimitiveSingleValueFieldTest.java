@@ -15,6 +15,25 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PrimitiveSingleValueFieldTest extends ModelDatasetMapperFixture {
+    private static final Class<?> classUnderTest = PrimitiveSingleValueField.class;
+
+    @Test
+    public void canDeserialize() throws Exception {
+        MetadataField f = mapper.readValue(getTestJsonFileFor(classUnderTest), MetadataField.class);
+        assertEquals(classUnderTest, f.getClass());
+        PrimitiveSingleValueField psvf = (PrimitiveSingleValueField) f;
+        assertEquals("Test", psvf.getValue());
+    }
+
+    @Test
+    public void roundTrip() throws Exception {
+        MetadataField f = roundTrip(getTestJsonFileFor(classUnderTest), MetadataField.class);
+        assertEquals(classUnderTest, f.getClass());
+    }
 
 }

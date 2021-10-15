@@ -15,8 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class CompoundFieldTest extends ModelDatasetMapperFixture {
     private static final Class<?> classUnderTest = CompoundField.class;
@@ -24,14 +27,17 @@ public class CompoundFieldTest extends ModelDatasetMapperFixture {
     @Test
     public void canDeserialize() throws Exception {
         MetadataField f = mapper.readValue(getTestJsonFileFor(classUnderTest), MetadataField.class);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        assertEquals(classUnderTest, f.getClass());
         CompoundField compoundField = (CompoundField) f;
-        Assertions.assertEquals("DANS", compoundField.getValue().get(0).get("authorAffiliation").getValue());
+        assertEquals(1, compoundField.getValue().size());
+        Map<String, SingleValueField> firstValue = compoundField.getValue().get(0);
+        assertEquals("User01, Test01", firstValue.get("authorName").getValue());
+        assertEquals("DANS", firstValue.get("authorAffiliation").getValue());
     }
 
     @Test
     public void roundTrip() throws Exception {
         MetadataField f = roundTrip(getTestJsonFileFor(classUnderTest), MetadataField.class);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        assertEquals(classUnderTest, f.getClass());
     }
 }

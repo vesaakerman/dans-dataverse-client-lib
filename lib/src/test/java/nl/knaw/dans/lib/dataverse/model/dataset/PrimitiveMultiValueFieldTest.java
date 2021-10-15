@@ -15,6 +15,27 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
+import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class PrimitiveMultiValueFieldTest extends ModelDatasetMapperFixture {
+    private static final Class<?> classUnderTest = PrimitiveMultiValueField.class;
+
+    @Test
+    public void canDeserialize() throws Exception {
+        MetadataField f = mapper.readValue(getTestJsonFileFor(classUnderTest), MetadataField.class);
+        assertEquals(classUnderTest, f.getClass());
+        PrimitiveMultiValueField pmvf = (PrimitiveMultiValueField) f;
+        assertEquals(Arrays.asList("Test1", "Test2"), pmvf.getValue());
+    }
+
+    @Test
+    public void roundTrip() throws Exception {
+        MetadataField f = roundTrip(getTestJsonFileFor(classUnderTest), MetadataField.class);
+        assertEquals(classUnderTest, f.getClass());
+    }
 
 }

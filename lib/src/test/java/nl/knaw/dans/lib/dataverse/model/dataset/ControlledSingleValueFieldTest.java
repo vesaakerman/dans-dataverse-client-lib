@@ -15,7 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 class ControlledSingleValueFieldTest extends ModelDatasetMapperFixture {
@@ -24,12 +24,14 @@ class ControlledSingleValueFieldTest extends ModelDatasetMapperFixture {
     @Test
     public void canDeserialize() throws Exception {
         MetadataField f = mapper.readValue(getTestJsonFileFor(classUnderTest), MetadataField.class);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        assertEquals(classUnderTest, f.getClass());
+        ControlledSingleValueField csvf = (ControlledSingleValueField) f;
+        assertEquals("Test", csvf.getValue());
     }
 
     @Test
     public void roundTrip() throws Exception {
         MetadataField f = roundTrip(getTestJsonFileFor(classUnderTest), MetadataField.class);
-        Assertions.assertEquals(classUnderTest, f.getClass());
+        assertEquals(classUnderTest, f.getClass());
     }
 }

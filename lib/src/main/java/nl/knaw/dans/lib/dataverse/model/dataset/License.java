@@ -15,9 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
+import java.net.URI;
+
 public class License {
     private String label;
-    private String uri; // TODO: change to URI
+    private URI uri;
 
     public String getLabel() {
         return label;
@@ -27,11 +29,11 @@ public class License {
         this.label = label;
     }
 
-    public String getUri() {
+    public URI getUri() {
         return uri;
     }
 
-    public void setUri(String uri) {
+    public void setUri(URI uri) {
         this.uri = uri;
     }
 }
