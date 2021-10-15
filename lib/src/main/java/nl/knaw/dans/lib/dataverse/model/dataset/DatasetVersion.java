@@ -33,6 +33,7 @@ public class DatasetVersion {
     private String createTime; // TODO: timestamp?
     private boolean fileAccessRequest;
     private String termsOfUse;
+    private String termsOfAccess;
     private License license;
     private String protocol;
     private String authority;
@@ -142,6 +143,14 @@ public class DatasetVersion {
 
     public void setTermsOfUse(String termsOfUse) {
         this.termsOfUse = termsOfUse;
+    }
+
+    public String getTermsOfAccess() {
+        return termsOfAccess;
+    }
+
+    public void setTermsOfAccess(String termsOfAccess) {
+        this.termsOfAccess = termsOfAccess;
     }
 
     public License getLicense() {

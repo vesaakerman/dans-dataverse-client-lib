@@ -15,6 +15,33 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
-class DatasetVersionTest extends ModelDatasetMapperFixture {
+import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
+
+class DatasetVersionTest extends ModelDatasetMapperFixture {
+    private static final Class<DatasetVersion> classUnderTest = DatasetVersion.class;
+
+    @Test
+    public void canDeserialize() throws Throwable {
+        DatasetVersion dsv = mapper.readValue(getTestJsonFileFor(classUnderTest, "no-files"), classUnderTest);
+        assertEquals(classUnderTest, dsv.getClass());
+        assertEquals(7, dsv.getId());
+        assertEquals("file://10.5072/FK2/U6AEZM", dsv.getStorageIdentifier());
+        assertEquals("CC0", dsv.getLicense().getLabel());
+        MetadataField title = dsv.getMetadataBlocks()
+            .get("citation")
+            .getFields()
+            .stream()
+            .filter(f -> "title".equals(f.getTypeName()) )
+            .findFirst().orElseThrow(() -> fail("No title found"));
+        assertEquals("Test", ((PrimitiveSingleValueField) title).getValue());
+    }
+
+    @Test
+    public void roundTrip() throws Exception {
+        DatasetVersion f = roundTrip(getTestJsonFileFor(classUnderTest, "no-files"), DatasetVersion.class);
+        assertEquals(classUnderTest, f.getClass());
+    }
 }
