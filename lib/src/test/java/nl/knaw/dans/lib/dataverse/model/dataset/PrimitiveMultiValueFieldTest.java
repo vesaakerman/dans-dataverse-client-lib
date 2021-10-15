@@ -13,18 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import java.util.List;
+class PrimitiveMultiValueFieldTest extends ModelDatasetMapperFixture {
 
-public class TestObject<T> {
-    private List<T> myList;
-
-    public List<T> getMyList() {
-        return myList;
-    }
-
-    public void setMyList(List<T> myList) {
-        this.myList = myList;
-    }
 }

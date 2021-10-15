@@ -13,7 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * Objects that model the messages sent to and received from Dataverse.
- */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
+
+import nl.knaw.dans.lib.dataverse.MapperFixture;
+
+public class ModelDatasetMapperFixture extends MapperFixture {
+
+    protected ModelDatasetMapperFixture() {
+        super("model/dataset/");
+    }
+}

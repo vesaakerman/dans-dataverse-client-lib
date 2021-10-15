@@ -15,46 +15,38 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 import nl.knaw.dans.lib.dataverse.model.Dataverse;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
-import nl.knaw.dans.lib.dataverse.model.dataset.MetadataField;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public class DataverseResponseTest {
+public class DataverseResponseTest extends MapperFixture {
+    private static final Class<?> classUnderTest = DataverseResponse.class;
 
-    private ObjectMapper mapper;
-
-    @BeforeEach
-    public void beforeEach() {
-        mapper = new ObjectMapper();
-        SimpleModule module = new SimpleModule();
-        module.addDeserializer(MetadataField.class, new MetadataFieldDeserializer());
-        mapper.registerModule(module);
+    protected DataverseResponseTest() {
+        super("");
     }
 
     @Test
     public void simpleDataverseViewReponseCanBeDeserialized() throws Exception {
-        DataverseResponse<Dataverse> r = new DataverseResponse<>(FileUtils.readFileToString(new File("src/test/resources/dataverse-response/dataverse-info.json"), StandardCharsets.UTF_8),
-            mapper, Dataverse.class);
+        DataverseResponse<Dataverse> r =
+            new DataverseResponse<>(FileUtils.readFileToString(getTestJsonFileFor(classUnderTest), StandardCharsets.UTF_8),
+                mapper, Dataverse.class);
         Assertions.assertEquals("root", r.getData().getAlias());
         Assertions.assertEquals("Dataverse Name", r.getData().getName());
     }
 
-    @Test
-    public void nestedTypeParametersCanBeDeserialized() throws Exception {
-        DataverseResponse<List<DatasetVersion>> r = new DataverseResponse<>(FileUtils.readFileToString(new File("src/test/resources/dataverse-response/test2.json"), StandardCharsets.UTF_8),
-            mapper, List.class, DatasetVersion.class);
-        // TODO: REPLACE WITH ASSERTION
-        System.out.println(r.getData().get(0).getCreateTime());
-    }
+//    @Test
+//    public void nestedTypeParametersCanBeDeserialized() throws Exception {
+//        DataverseResponse<List<DatasetVersion>> r = new DataverseResponse<>(FileUtils.readFileToString(new File("src/test/resources/dataverse-response/test2.json"), StandardCharsets.UTF_8),
+//            mapper, List.class, DatasetVersion.class);
+//        // TODO: REPLACE WITH ASSERTION
+//        System.out.println(r.getData().get(0).getCreateTime());
+//    }
 
 }

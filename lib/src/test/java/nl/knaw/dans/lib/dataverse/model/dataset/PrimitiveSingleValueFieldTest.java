@@ -13,25 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-public class Ab<D> {
-    private D a;
-    private D b;
+class PrimitiveSingleValueFieldTest extends ModelDatasetMapperFixture {
 
-    public D getA() {
-        return a;
-    }
-
-    public void setA(D a) {
-        this.a = a;
-    }
-
-    public D getB() {
-        return b;
-    }
-
-    public void setB(D b) {
-        this.b = b;
-    }
 }
