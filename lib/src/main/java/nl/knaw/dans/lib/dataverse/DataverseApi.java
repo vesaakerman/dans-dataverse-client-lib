@@ -40,7 +40,7 @@ public class DataverseApi extends AbstractApi {
     protected DataverseApi(HttpClientWrapper httpClientWrapper, String alias) {
         super(httpClientWrapper);
         log.trace("ENTER");
-        this.subPath = Paths.get("api/dataverses/").resolve(alias);
+        this.subPath = Paths.get("api/dataverses/").resolve(alias + "/");
     }
 
     /**
@@ -82,24 +82,230 @@ public class DataverseApi extends AbstractApi {
         return httpClientWrapper.delete(subPath, DataMessage.class);
     }
 
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#show-contents-of-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#report-the-data-file-size-of-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-roles-defined-in-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-facets-configured-for-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#set-facets-for-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-new-role-in-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-role-assignments-in-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#assign-default-role-to-user-creating-a-dataset-in-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#assign-a-new-role-on-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-role-assignment-from-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-metadata-blocks-defined-on-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#define-metadata-blocks-for-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#determine-if-a-dataverse-collection-inherits-its-metadata-blocks-from-its-parent
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#configure-a-dataverse-collection-to-inherit-its-metadata-blocks-from-its-parent
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-dataset-in-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#import-a-dataset-into-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#import-a-dataset-into-a-dataverse-installation-with-a-ddi-file
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataverse-collection
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#retrieve-guestbook-responses-for-a-dataverse-collection
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#show-contents-of-a-dataverse-collection
+     */
+    public DataverseHttpResponse<Object> getContents() throws IOException, DataverseException {
+        log.trace("ENTER");
+        return httpClientWrapper.get(subPath.resolve("contents"));
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#report-the-data-file-size-of-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> dataFileSize() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#list-roles-defined-in-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> listRoles() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#list-facets-configured-for-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> listFacets() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#set-facets-for-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> setFacets() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-new-role-in-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> createRole() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#list-role-assignments-in-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> listRoleAssignments() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#assign-default-role-to-user-creating-a-dataset-in-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> assignDefaultRoleOnDataset() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#assign-a-new-role-on-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> assignRole() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#delete-role-assignment-from-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> deleteRoleAssignment() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#list-metadata-blocks-defined-on-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> listMetadataBlocks() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#define-metadata-blocks-for-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> defineMetadataBlocks() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#determine-if-a-dataverse-collection-inherits-its-metadata-blocks-from-its-parent
+     */
+    public DataverseHttpResponse<DataMessage> inheritsMetadatablocks() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#configure-a-dataverse-collection-to-inherit-its-metadata-blocks-from-its-parent
+     */
+    public DataverseHttpResponse<DataMessage> setInheritMetadataBlocks() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-dataset-in-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> createDataset() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#import-a-dataset-into-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> importDataset() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#import-a-dataset-into-a-dataverse-installation-with-a-ddi-file
+     */
+    public DataverseHttpResponse<DataMessage> importDatasetFromDdi() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> publish() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#retrieve-guestbook-responses-for-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> getGuestBookResponses() throws IOException, DataverseException {
+        log.trace("ENTER");
+        // TODO: implement
+        throw new UnsupportedOperationException();
+
+    }
 
 }

@@ -153,7 +153,7 @@ class HttpClientWrapper implements MediaTypes {
         }
     }
 
-    private <D> DataverseHttpResponse<D> wrap(HttpResponse response, Class<?>... dataClass) throws  IOException, DataverseException {
+    private <D> DataverseHttpResponse<D> wrap(HttpResponse response, Class<?>... dataClass) throws  IOException {
         return new DataverseHttpResponse<>(response, mapper, dataClass);
     }
 
