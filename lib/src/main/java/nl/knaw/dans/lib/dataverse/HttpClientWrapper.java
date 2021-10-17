@@ -22,6 +22,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
@@ -57,6 +58,8 @@ class HttpClientWrapper implements MediaTypes {
         this.mapper = mapper;
     }
 
+    // TODO: POST multi-part
+
     /*
      * POST methods
      */
@@ -84,10 +87,31 @@ class HttpClientWrapper implements MediaTypes {
         return dispatch(post);
     }
 
-
     /*
      * PUT methods
      */
+    public <D> DataverseHttpResponse<D> putModelObjectAsJson(Path subPath, D modelObject, Class<?>... c) throws IOException, DataverseException {
+        return putModelObjectAsJson(subPath, modelObject, new HashMap<>(), new HashMap<>(),  c);
+    }
+
+    public <T> DataverseHttpResponse<T> putModelObjectAsJson(Path subPath, T modelObject, Map<String, String> parameters, Map<String, String> headers, Class<?>... c) throws IOException, DataverseException {
+        return wrap(putJsonString(subPath, mapper.writeValueAsString(modelObject), parameters, headers), c);
+    }
+
+    public HttpResponse putJsonString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException, DataverseException {
+        return putString(subPath, s, APPLICATION_JSON, parameters, headers);
+    }
+
+    public HttpResponse putJsonLdString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException, DataverseException {
+        return putString(subPath, s, APPLICATION_JSON_LD, parameters, headers);
+    }
+    public HttpResponse putString(Path subPath, String s, String mediaType, Map<String, String> parameters, Map<String, String> headers) throws IOException, DataverseException {
+        HttpPut put = new HttpPut(buildURi(subPath, parameters));
+        put.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
+        headers.forEach(put::setHeader);
+        put.setEntity(new StringEntity(s));
+        return dispatch(put);
+    }
 
     /*
      * GET methods
