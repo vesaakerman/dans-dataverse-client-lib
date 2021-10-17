@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import nl.knaw.dans.lib.dataverse.model.DataMessage;
 import nl.knaw.dans.lib.dataverse.model.Dataverse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ public class DataverseApi extends AbstractApi {
 
     protected DataverseApi(HttpClientWrapper httpClientWrapper, String alias) {
         super(httpClientWrapper);
+        log.trace("ENTER");
         this.subPath = Paths.get("api/dataverses/").resolve(alias);
     }
 
@@ -52,6 +54,7 @@ public class DataverseApi extends AbstractApi {
      * @throws DataverseException when Dataverse fails to perform the request
      */
     public DataverseHttpResponse<Dataverse> create(Dataverse dataverse) throws IOException, DataverseException {
+        log.trace("ENTER");
         return httpClientWrapper.postModelObjectAsJson(subPath, dataverse, new HashMap<>(), new HashMap<>(), Dataverse.class);
     }
 
@@ -69,7 +72,16 @@ public class DataverseApi extends AbstractApi {
         return httpClientWrapper.get(subPath, Dataverse.class);
     }
 
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-a-dataverse-collection
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#delete-a-dataverse-collection
+     */
+    public DataverseHttpResponse<DataMessage> delete() throws IOException, DataverseException {
+        log.trace("ENTER");
+        return httpClientWrapper.delete(subPath, DataMessage.class);
+    }
+
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#show-contents-of-a-dataverse-collection
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#report-the-data-file-size-of-a-dataverse-collection
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-roles-defined-in-a-dataverse-collection

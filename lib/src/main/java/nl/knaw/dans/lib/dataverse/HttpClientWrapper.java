@@ -18,8 +18,8 @@ package nl.knaw.dans.lib.dataverse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -31,7 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -58,7 +57,10 @@ class HttpClientWrapper implements MediaTypes {
         this.mapper = mapper;
     }
 
-    public <T> DataverseHttpResponse<T> postModelObjectAsJson(Path subPath, T modelObject, Class<?>... c) throws IOException, DataverseException {
+    /*
+     * POST methods
+     */
+    public <D> DataverseHttpResponse<D> postModelObjectAsJson(Path subPath, D modelObject, Class<?>... c) throws IOException, DataverseException {
         return postModelObjectAsJson(subPath, modelObject, new HashMap<>(), new HashMap<>(),  c);
     }
 
@@ -82,12 +84,14 @@ class HttpClientWrapper implements MediaTypes {
         return dispatch(post);
     }
 
-    public <T> HttpResponse post(Path subPath, T json) throws IOException {
-        HttpPost post = new HttpPost(config.getBaseUrl().resolve(subPath.toString()));
-        post.setEntity(new StringEntity(mapper.writeValueAsString(json)));
-        return httpClient.execute(post);
-    }
 
+    /*
+     * PUT methods
+     */
+
+    /*
+     * GET methods
+     */
     public <D> DataverseHttpResponse<D> get(Path subPath, Class<?>... outputClass) throws IOException, DataverseException {
         return get(subPath, new HashMap<>(), outputClass);
     }
@@ -97,6 +101,21 @@ class HttpClientWrapper implements MediaTypes {
         return wrap(dispatch(get), outputClass);
     }
 
+    /*
+     * DELETE methods
+     */
+    public <D> DataverseHttpResponse<D> delete(Path subPath, Class<?>... outputClass) throws IOException, DataverseException {
+        return delete(subPath, new HashMap<>(), outputClass);
+    }
+
+    public <D> DataverseHttpResponse<D> delete(Path subPath, Map<String, String> parameters, Class<?>... outputClass) throws IOException, DataverseException {
+        HttpDelete delete = new HttpDelete(buildURi(subPath, parameters));
+        return wrap(dispatch(delete), outputClass);
+    }
+
+    /*
+     *  Helper methods.
+     */
     private URI buildURi(Path subPath, Map<String, String> parameters) {
         try {
             URI uri = new URIBuilder(config.getBaseUrl().resolve(subPath.toString())).setParameters(parameters.entrySet().stream()
