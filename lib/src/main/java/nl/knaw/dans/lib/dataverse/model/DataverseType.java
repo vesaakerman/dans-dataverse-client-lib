@@ -13,17 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.model;
 
-import nl.knaw.dans.lib.dataverse.model.Dataverse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-public class ViewDataverse  extends ExampleBase {
-    private static final Logger log = LoggerFactory.getLogger(ViewDataverse.class);
-
-    public static void main(String[] args) throws Exception {
-        DataverseResponse<Dataverse> r = client.dataverse("test3").view();
-        log.info("Description = {}", r.getData().getDescription());
-    }
+public enum DataverseType {
+    DEPARTMENT,
+    JOURNALS,
+    LABORATORY,
+    ORGANIZATIONS_INSTITUTIONS,
+    RESEARCHERS,
+    RESEARCH_GROUP,
+    RESEARCH_PROJECTS,
+    TEACHING_COURSES,
+    UNCATEGORIZED;
 }

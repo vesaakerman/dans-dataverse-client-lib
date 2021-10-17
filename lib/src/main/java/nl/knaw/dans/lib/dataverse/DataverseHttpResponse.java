@@ -22,7 +22,6 @@ import org.apache.http.util.EntityUtils;
 import java.io.IOException;
 
 public class DataverseHttpResponse<D> extends DataverseResponse<D> {
-
     private final HttpResponse httpResponse;
 
     protected DataverseHttpResponse(HttpResponse httpResponse, ObjectMapper customMapper, Class<?>... dataClass) throws IOException {

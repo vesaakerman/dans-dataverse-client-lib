@@ -25,7 +25,7 @@ public class Dataverse {
     private boolean permissionRoot;
     private String affiliation;
     private String description;
-    private String dataverseType;
+    private DataverseType dataverseType;
     private String storageDriverLabel;
     private String creationDate;
     private List<DataverseContact> dataverseContacts;
@@ -86,11 +86,11 @@ public class Dataverse {
         this.description = description;
     }
 
-    public String getDataverseType() {
+    public DataverseType getDataverseType() {
         return dataverseType;
     }
 
-    public void setDataverseType(String dataverseType) {
+    public void setDataverseType(DataverseType dataverseType) {
         this.dataverseType = dataverseType;
     }
 

@@ -13,10 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.example;
 
+import nl.knaw.dans.lib.dataverse.DataverseHttpResponse;
 import nl.knaw.dans.lib.dataverse.model.Dataverse;
 import nl.knaw.dans.lib.dataverse.model.DataverseContact;
+import nl.knaw.dans.lib.dataverse.ExampleBase;
+import nl.knaw.dans.lib.dataverse.model.DataverseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,9 +31,9 @@ public class CreateDataverse extends ExampleBase {
 
     public static void main(String[] args) throws Exception {
         Dataverse dataverse = new Dataverse();
-        dataverse.setDataverseType("journal");
-        dataverse.setName("A Test Dataverse 3");
-        dataverse.setAlias("test3");
+        dataverse.setDataverseType(DataverseType.JOURNALS);
+        dataverse.setName("A Test Dataverse");
+        dataverse.setAlias("test");
         dataverse.setDescription("This is a longer description than 'name' and 'alias'");
         dataverse.setDataverseContacts(
             Arrays.asList(

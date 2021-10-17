@@ -16,6 +16,7 @@
 package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import nl.knaw.dans.lib.dataverse.model.DataverseEnvelope;
@@ -43,7 +44,6 @@ import java.io.IOException;
  * @param <D> the type of the payload of the response message
  */
 public class DataverseResponse<D> {
-
     private static final Logger log = LoggerFactory.getLogger(DataverseResponse.class);
     private final ObjectMapper mapper;
 
@@ -58,12 +58,12 @@ public class DataverseResponse<D> {
         TypeFactory typeFactory = mapper.getTypeFactory();
         if (dataClass.length == 2) {
             JavaType inner = typeFactory.constructParametricType(dataClass[0], dataClass[1]);
-            this.dataType =  typeFactory.constructParametricType(DataverseEnvelope.class, inner);
-        } else {
+            this.dataType = typeFactory.constructParametricType(DataverseEnvelope.class, inner);
+        }
+        else {
             this.dataType = typeFactory.constructParametricType(DataverseEnvelope.class, dataClass[0]);
         }
     }
-
 
     // Must be static, otherwise compiler complains about passing result into 'this()' call
     private static JavaType constuctJavaTypeForContainerClass(Class<?> containerClass, Class<?> elementClass, ObjectMapper mapper) {
@@ -82,5 +82,13 @@ public class DataverseResponse<D> {
 
     public D getData() throws IOException {
         return getEnvelope().getData();
+    }
+
+    public JsonNode getEnvelopeAsJson() throws IOException {
+        return mapper.readTree(bodyText);
+    }
+
+    public String getEnvelopeAsString() throws IOException {
+        return bodyText;
     }
 }
