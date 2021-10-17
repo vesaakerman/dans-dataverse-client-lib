@@ -52,20 +52,7 @@ public class DatasetApi extends AbstractApi {
      */
     public DataverseResponse<List<DatasetVersion>> getVersion(String version) throws IOException, DataverseException {
         return getVersionedFromTarget("", version, List.class, DatasetVersion.class);
-        // getVersionedFromTarget("", version, Arrays.asList(List.class, DatasetVersion.class))
     }
-
-    private <D> DataverseHttpResponse<D> getVersionedFromTarget(String endPoint, String version, Class<?>... outputClass) throws IOException, DataverseException {
-        log.trace("ENTER");
-        if (isPersistentId) {
-            HashMap<String, String> parameters = new HashMap<>();
-            parameters.put("persistentId", id);
-            return httpClientWrapper.get(targetBase.resolve(persistendId).resolve("versions/").resolve(endPoint), parameters, outputClass);
-        } else {
-            return httpClientWrapper.get(targetBase.resolve(id).resolve("versions/").resolve(endPoint), outputClass);
-        }
-    }
-
 
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#export-metadata-of-a-dataset-in-various-formats
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#schema-org-json-ld
@@ -83,4 +70,17 @@ public class DatasetApi extends AbstractApi {
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-role-assignments-in-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#assign-a-new-role-on-a-dataset
 
+    /*
+     * Helper methods
+     */
+    private <D> DataverseHttpResponse<D> getVersionedFromTarget(String endPoint, String version, Class<?>... outputClass) throws IOException, DataverseException {
+        log.trace("ENTER");
+        if (isPersistentId) {
+            HashMap<String, String> parameters = new HashMap<>();
+            parameters.put("persistentId", id);
+            return httpClientWrapper.get(targetBase.resolve(persistendId).resolve("versions/").resolve(endPoint), parameters, outputClass);
+        } else {
+            return httpClientWrapper.get(targetBase.resolve(id).resolve("versions/").resolve(endPoint), outputClass);
+        }
+    }
 }
