@@ -29,6 +29,7 @@ public class GetDatasetVersion extends ExampleBase {
 
     public static void main(String[] args) throws Exception {
         DataverseResponse<List<DatasetVersion>> r = client.dataset(args[0]).getVersion(":latest");
-        log.info("Get create-time = {}", r.getData().get(0).getCreateTime());
+        log.info("Create Time: {}", r.getData().get(0).getCreateTime());
+        log.info("Version State: {}", r.getData().get(0).getVersionState());
     }
 }

@@ -16,6 +16,8 @@
 package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import nl.knaw.dans.lib.dataverse.model.dataset.MetadataField;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClients;
 
@@ -25,7 +27,7 @@ import org.apache.http.impl.client.HttpClients;
 public class DataverseClient {
 
     private final HttpClientWrapper httpClientWrapper;
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final ObjectMapper mapper;
 
     /**
      * Creates a DataverseClient.
@@ -33,7 +35,7 @@ public class DataverseClient {
      * @param config configuration for this DataverseClient
      */
     public DataverseClient(DataverseClientConfig config) {
-        this(config, HttpClients.createDefault());
+        this(config, HttpClients.createDefault(), null);
     }
 
     /**
@@ -42,7 +44,17 @@ public class DataverseClient {
      * @param config     configuration for this DataverseClient
      * @param httpClient the `org.apache.http.client.HttpClient` to use when interacting with Dataverse
      */
-    public DataverseClient(DataverseClientConfig config, HttpClient httpClient) {
+    public DataverseClient(DataverseClientConfig config, HttpClient httpClient, ObjectMapper objectMapper) {
+        if (objectMapper == null)
+            mapper = new ObjectMapper();
+        else
+            mapper = objectMapper;
+        SimpleModule module = new SimpleModule();
+        // TODO: How to get rid of type warnings?
+        // TODO: Create proper Jackson module for this?
+        // TODO: Make use of this deserializer optional through system property?
+        module.addDeserializer(MetadataField.class, new MetadataFieldDeserializer());
+        mapper.registerModule(module);
         this.httpClientWrapper = new HttpClientWrapper(config, httpClient, mapper);
     }
 

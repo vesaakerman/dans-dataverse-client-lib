@@ -41,7 +41,7 @@ import java.io.IOException;
  *
  * {@link nl.knaw.dans.lib.dataverse.model}.
  *
- * @param <D> the type of the payload of the response message
+ * @param <D> the type of the data of the response message envelope
  */
 public class DataverseResponse<D> {
     private static final Logger log = LoggerFactory.getLogger(DataverseResponse.class);
@@ -73,22 +73,33 @@ public class DataverseResponse<D> {
     }
 
     /**
-     * @return
-     * @throws IOException
+     * @return A dataverse envelope
+     * @throws IOException if body cannot be processed properly as JSON
      */
     public DataverseEnvelope<D> getEnvelope() throws IOException {
         return mapper.readValue(bodyText, dataType);
     }
 
+    /**
+     * @return the payload of the envelope directly
+     * @throws IOException if body cannot be processed properly as JSON
+     */
     public D getData() throws IOException {
         return getEnvelope().getData();
     }
 
+    /**
+     * @return the envelope as a JSON AST
+     * @throws IOException if body cannot be processed properly as JSON
+     */
     public JsonNode getEnvelopeAsJson() throws IOException {
         return mapper.readTree(bodyText);
     }
 
-    public String getEnvelopeAsString() throws IOException {
+    /**
+     * @return the body as a String
+     */
+    public String getEnvelopeAsString() {
         return bodyText;
     }
 }

@@ -43,8 +43,8 @@ public class CreateDataverse extends ExampleBase {
         log.info(mapper.writerWithDefaultPrettyPrinter().writeValueAsString(dataverse));
         DataverseHttpResponse<Dataverse> r = client.dataverse("root").create(dataverse);
         log.info("--- END JSON OBJECT ---");
-        log.info("Status Line: " + r.getHttpResponse().getStatusLine());
-        log.info("Created: " + r.getData().getDescription());
-        log.info("Creation Date: " + r.getData().getCreationDate());
+        log.info("Status Line: {}", r.getHttpResponse().getStatusLine());
+        log.info("Created: {}", r.getData().getDescription());
+        log.info("Creation Date: {}", r.getData().getCreationDate());
     }
 }
