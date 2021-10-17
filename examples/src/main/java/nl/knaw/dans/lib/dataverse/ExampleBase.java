@@ -15,15 +15,18 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
-public class CreateClient {
+public abstract class ExampleBase {
 
     protected static DataverseClient client;
+    protected static ObjectMapper mapper = new ObjectMapper();
 
     static {
         try {
@@ -31,10 +34,7 @@ public class CreateClient {
             DataverseClientConfig config = new DataverseClientConfig(new URI(props.getString("baseUrl")), props.getString("apiToken"));
             client = new DataverseClient(config);
         }
-        catch (ConfigurationException e) {
-            e.printStackTrace();
-        }
-        catch (URISyntaxException e) {
+        catch (ConfigurationException | URISyntaxException e) {
             e.printStackTrace();
         }
     }

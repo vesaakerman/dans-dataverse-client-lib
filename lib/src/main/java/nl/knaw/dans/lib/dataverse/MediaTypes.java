@@ -15,15 +15,8 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.Dataverse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public interface MediaTypes {
 
-public class ViewDataverse  extends ExampleBase {
-    private static final Logger log = LoggerFactory.getLogger(ViewDataverse.class);
-
-    public static void main(String[] args) throws Exception {
-        DataverseResponse<Dataverse> r = client.dataverse("root").view();
-        log.info("Description = {}", r.getData().getDescription());
-    }
+    String APPLICATION_JSON = "application/json";
+    String APPLICATION_JSON_LD = "application/json-ld";
 }

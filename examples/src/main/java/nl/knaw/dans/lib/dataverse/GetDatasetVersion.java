@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class GetDatasetVersion extends CreateClient {
+public class GetDatasetVersion extends ExampleBase {
 
     private static final Logger log = LoggerFactory.getLogger(GetDatasetVersion.class);
 

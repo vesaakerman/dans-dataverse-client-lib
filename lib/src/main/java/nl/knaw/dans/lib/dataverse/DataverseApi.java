@@ -22,6 +22,8 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
+import java.util.stream.Stream;
 
 /**
  * API end-points that operate on a dataverse collection.
@@ -41,6 +43,10 @@ public class DataverseApi extends AbstractApi {
     }
 
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-dataverse-collection
+
+    public DataverseHttpResponse<Dataverse> create(Dataverse dataverse) throws IOException {
+        return httpClientWrapper.postModelObjectAsJson(subPath, dataverse, new HashMap<>(), new HashMap<>(), Dataverse.class);
+    }
 
     /**
      * See [Dataverse API Guide].

@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
  * Helper class that wraps an HttpClient, the configuration data and a Jackson object mapper. It implements generic methods for sending HTTP requests to the server and deserializing the responses
  * received.
  */
-class HttpClientWrapper {
+class HttpClientWrapper implements MediaTypes {
     private static final Logger log = LoggerFactory.getLogger(HttpClientWrapper.class);
 
     private final DataverseClientConfig config;
@@ -53,23 +53,25 @@ class HttpClientWrapper {
         this.mapper = mapper;
     }
 
-    public HttpResponse postString(Path subPath, String s, String mediaType, Map<String, String> parameters) throws IOException {
+    public HttpResponse postString(Path subPath, String s, String mediaType, Map<String, String> parameters, Map<String, String> headers) throws IOException {
         HttpPost post = new HttpPost(buildURi(subPath, parameters));
         post.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
+        post.setHeader("X-Dataverse-key", config.getApiToken());
+        headers.forEach(post::setHeader);
         post.setEntity(new StringEntity(s));
         return httpClient.execute(post);
     }
 
-    public HttpResponse postJsonString(Path subPath, String s, Map<String, String> parameters) throws IOException {
-        return postString(subPath, s, "application/json", parameters);
+    public HttpResponse postJsonString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException {
+        return postString(subPath, s, APPLICATION_JSON, parameters, headers);
     }
 
-    public HttpResponse postJsonLdString(Path subPath, String s, Map<String, String> parameters) throws IOException {
-        return postString(subPath, s, "application/json-ld", parameters);
+    public HttpResponse postJsonLdString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException {
+        return postString(subPath, s, APPLICATION_JSON_LD, parameters, headers);
     }
 
-    public <T> DataverseHttpResponse<T> postModelObjectAsJson(Path subPath, T modelObject, Map<String, String> parameters, Class<?>... c) throws IOException {
-        return new DataverseHttpResponse<T>(postJsonString(subPath, mapper.writeValueAsString(modelObject), parameters), mapper, c);
+    public <T> DataverseHttpResponse<T> postModelObjectAsJson(Path subPath, T modelObject, Map<String, String> parameters, Map<String, String> headers, Class<?>... c) throws IOException {
+        return new DataverseHttpResponse<T>(postJsonString(subPath, mapper.writeValueAsString(modelObject), parameters, headers), mapper, c);
     }
 
     public <T> HttpResponse post(Path subPath, T json) throws IOException {
