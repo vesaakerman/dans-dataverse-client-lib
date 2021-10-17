@@ -29,8 +29,8 @@ public class CreateDataverse extends ExampleBase {
     public static void main(String[] args) throws Exception {
         Dataverse dataverse = new Dataverse();
         dataverse.setDataverseType("journal");
-        dataverse.setName("A Test Dataverse");
-        dataverse.setAlias("test2");
+        dataverse.setName("A Test Dataverse 3");
+        dataverse.setAlias("test3");
         dataverse.setDescription("This is a longer description than 'name' and 'alias'");
         dataverse.setDataverseContacts(
             Arrays.asList(

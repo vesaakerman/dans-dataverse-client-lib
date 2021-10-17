@@ -23,7 +23,6 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.stream.Stream;
 
 /**
  * API end-points that operate on a dataverse collection.
@@ -42,9 +41,17 @@ public class DataverseApi extends AbstractApi {
         this.subPath = Paths.get("api/dataverses/").resolve(alias);
     }
 
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-dataverse-collection
-
-    public DataverseHttpResponse<Dataverse> create(Dataverse dataverse) throws IOException {
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-dataverse-collection
+     *
+     * @param dataverse dataverse to create
+     * @return description of the dataverse just created
+     * @throws IOException        when I/O problems occur during the interaction with Dataverse
+     * @throws DataverseException when Dataverse fails to perform the request
+     */
+    public DataverseHttpResponse<Dataverse> create(Dataverse dataverse) throws IOException, DataverseException {
         return httpClientWrapper.postModelObjectAsJson(subPath, dataverse, new HashMap<>(), new HashMap<>(), Dataverse.class);
     }
 

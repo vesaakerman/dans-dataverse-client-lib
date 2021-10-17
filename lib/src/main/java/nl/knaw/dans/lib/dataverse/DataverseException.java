@@ -15,10 +15,21 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-public class DataverseException extends Exception {
+import org.apache.http.HttpResponse;
 
-    public DataverseException(String msg, Throwable cause) {
-        super(msg, cause);
+public class DataverseException extends Exception {
+    private int status;
+    private HttpResponse httpResponse;
+
+    public DataverseException(int status, String msg, HttpResponse httpResponse) {
+        super(msg);
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public HttpResponse getHttpResponse() {
+        return httpResponse;
+    }
 }

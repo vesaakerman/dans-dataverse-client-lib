@@ -23,7 +23,7 @@ public class ViewDataverse  extends ExampleBase {
     private static final Logger log = LoggerFactory.getLogger(ViewDataverse.class);
 
     public static void main(String[] args) throws Exception {
-        DataverseResponse<Dataverse> r = client.dataverse("root").view();
+        DataverseResponse<Dataverse> r = client.dataverse("test3").view();
         log.info("Description = {}", r.getData().getDescription());
     }
 }

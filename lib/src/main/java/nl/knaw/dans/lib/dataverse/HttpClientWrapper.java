@@ -22,13 +22,16 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.StringReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
@@ -43,6 +46,8 @@ import java.util.stream.Collectors;
 class HttpClientWrapper implements MediaTypes {
     private static final Logger log = LoggerFactory.getLogger(HttpClientWrapper.class);
 
+    private static final String HEADER_X_DATAVERSE_KEY = "X-Dataverse-key";
+
     private final DataverseClientConfig config;
     private final HttpClient httpClient;
     private final ObjectMapper mapper;
@@ -53,25 +58,28 @@ class HttpClientWrapper implements MediaTypes {
         this.mapper = mapper;
     }
 
-    public HttpResponse postString(Path subPath, String s, String mediaType, Map<String, String> parameters, Map<String, String> headers) throws IOException {
-        HttpPost post = new HttpPost(buildURi(subPath, parameters));
-        post.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
-        post.setHeader("X-Dataverse-key", config.getApiToken());
-        headers.forEach(post::setHeader);
-        post.setEntity(new StringEntity(s));
-        return httpClient.execute(post);
+    public <T> DataverseHttpResponse<T> postModelObjectAsJson(Path subPath, T modelObject, Class<?>... c) throws IOException, DataverseException {
+        return postModelObjectAsJson(subPath, modelObject, new HashMap<>(), new HashMap<>(),  c);
     }
 
-    public HttpResponse postJsonString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException {
+    public <T> DataverseHttpResponse<T> postModelObjectAsJson(Path subPath, T modelObject, Map<String, String> parameters, Map<String, String> headers, Class<?>... c) throws IOException, DataverseException {
+        return wrap(postJsonString(subPath, mapper.writeValueAsString(modelObject), parameters, headers), c);
+    }
+
+    public HttpResponse postJsonString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException, DataverseException {
         return postString(subPath, s, APPLICATION_JSON, parameters, headers);
     }
 
-    public HttpResponse postJsonLdString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException {
+    public HttpResponse postJsonLdString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers) throws IOException, DataverseException {
         return postString(subPath, s, APPLICATION_JSON_LD, parameters, headers);
     }
 
-    public <T> DataverseHttpResponse<T> postModelObjectAsJson(Path subPath, T modelObject, Map<String, String> parameters, Map<String, String> headers, Class<?>... c) throws IOException {
-        return new DataverseHttpResponse<T>(postJsonString(subPath, mapper.writeValueAsString(modelObject), parameters, headers), mapper, c);
+    public HttpResponse postString(Path subPath, String s, String mediaType, Map<String, String> parameters, Map<String, String> headers) throws IOException, DataverseException {
+        HttpPost post = new HttpPost(buildURi(subPath, parameters));
+        post.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
+        headers.forEach(post::setHeader);
+        post.setEntity(new StringEntity(s));
+        return dispatch(post);
     }
 
     public <T> HttpResponse post(Path subPath, T json) throws IOException {
@@ -86,12 +94,7 @@ class HttpClientWrapper implements MediaTypes {
 
     public <D> DataverseHttpResponse<D> get(Path subPath, Map<String, String> parameters, Class<?>... outputClass) throws IOException, DataverseException {
         HttpGet get = new HttpGet(buildURi(subPath, parameters));
-
-        HttpResponse response = httpClient.execute(get);
-        if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK)
-            return new DataverseHttpResponse<>(httpClient.execute(get), mapper, outputClass);
-        else
-            throw new DataverseException("Status: " + response.getStatusLine(), null);
+        return wrap(dispatch(get), outputClass);
     }
 
     private URI buildURi(Path subPath, Map<String, String> parameters) {
@@ -105,6 +108,17 @@ class HttpClientWrapper implements MediaTypes {
         catch (URISyntaxException e) {
             throw new IllegalStateException("Programming error? Constructed invalid URI internally", e);
         }
+    }
+
+    private <D> DataverseHttpResponse<D> wrap(HttpResponse response, Class<?>... dataClass) throws  IOException, DataverseException {
+        return new DataverseHttpResponse<>(response, mapper, dataClass);
+    }
+
+    private HttpResponse dispatch(HttpUriRequest request) throws IOException, DataverseException {
+        request.setHeader(HEADER_X_DATAVERSE_KEY, config.getApiToken());
+        HttpResponse r = httpClient.execute(request);
+        if (r.getStatusLine().getStatusCode() >= 200 || r.getStatusLine().getStatusCode() < 300) return r;
+        else throw new DataverseException(r.getStatusLine().getStatusCode(), EntityUtils.toString(r.getEntity()), r);
     }
 
 }
