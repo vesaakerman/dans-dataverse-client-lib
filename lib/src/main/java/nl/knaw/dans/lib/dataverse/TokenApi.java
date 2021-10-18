@@ -13,16 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse;
 
-public enum DataverseType {
-    DEPARTMENT,
-    JOURNALS,
-    LABORATORY,
-    ORGANIZATIONS_INSTITUTIONS,
-    RESEARCHERS,
-    RESEARCH_GROUP,
-    RESEARCH_PROJECTS,
-    TEACHING_COURSES,
-    UNCATEGORIZED;
+public class TokenApi extends AbstractApi {
+    protected TokenApi(HttpClientWrapper httpClientWrapper) {
+        super(httpClientWrapper);
+    }
+
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#find-a-token-s-expiration-date
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#recreate-a-token
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-a-token
 }

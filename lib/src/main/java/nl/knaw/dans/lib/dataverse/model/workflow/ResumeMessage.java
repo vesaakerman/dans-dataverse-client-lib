@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.workflow;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

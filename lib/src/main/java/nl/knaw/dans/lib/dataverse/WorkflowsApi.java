@@ -15,8 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.ResumeMessage;
-import org.apache.http.HttpResponse;
+import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
 
 import java.io.IOException;
 import java.nio.file.Path;

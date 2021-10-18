@@ -16,6 +16,9 @@
 package nl.knaw.dans.lib.dataverse.model;
 
 import com.fasterxml.jackson.databind.JavaType;
+import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseDatasetItem;
+import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseItem;
+import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseSubverseItem;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

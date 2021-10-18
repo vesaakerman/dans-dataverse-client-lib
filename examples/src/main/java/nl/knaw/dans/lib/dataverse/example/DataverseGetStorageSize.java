@@ -13,33 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.example;
 
-public abstract class DataverseItem {
-    private DataverseItemType type;
-    private int id;
+import nl.knaw.dans.lib.dataverse.DataverseHttpResponse;
+import nl.knaw.dans.lib.dataverse.ExampleBase;
+import nl.knaw.dans.lib.dataverse.model.DataMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public DataverseItem() {
-    }
+public class DataverseGetStorageSize extends ExampleBase {
 
-    public DataverseItem(DataverseItemType type) {
-        this.type = type;
-    }
+    private static final Logger log = LoggerFactory.getLogger(DataverseGetStorageSize.class);
 
-    public DataverseItem(DataverseItemType type, int id) {
-        this.type = type;
-        this.id = id;
-    }
+    public static void main(String[] args) throws Exception {
+        DataverseHttpResponse<DataMessage> r = client.dataverse("root").getStorageSize();
+        log.info("Storage size: {}", r.getData().getMessage());
 
-    public DataverseItemType getType() {
-        return type;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 }

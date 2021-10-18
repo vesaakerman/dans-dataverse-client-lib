@@ -13,25 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.example;
 
-public class DataverseSubverseItem extends DataverseItem {
-    private String title;
+import nl.knaw.dans.lib.dataverse.DataverseHttpResponse;
+import nl.knaw.dans.lib.dataverse.ExampleBase;
+import nl.knaw.dans.lib.dataverse.model.DataMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-    public DataverseSubverseItem() {
-        super(DataverseItemType.dataverse);
-    }
+public class DataverseListRoles extends ExampleBase {
 
-    public DataverseSubverseItem(String title, int id) {
-        super(DataverseItemType.dataverse, id);
-        this.title = title;
-    }
+    private static final Logger log = LoggerFactory.getLogger(DataverseListRoles.class);
 
-    public String getTitle() {
-        return title;
-    }
+    public static void main(String[] args) throws Exception {
+        DataverseHttpResponse<DataMessage> r = client.dataverse("root").listRoles();
+        log.info(r.getEnvelopeAsString());
 
-    public void setTitle(String title) {
-        this.title = title;
     }
 }

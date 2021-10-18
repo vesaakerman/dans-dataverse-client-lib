@@ -13,9 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataverse;
 
-public enum DataverseItemType {
-    dataverse,
-    dataset
+public enum DataverseType {
+    DEPARTMENT,
+    JOURNALS,
+    LABORATORY,
+    ORGANIZATIONS_INSTITUTIONS,
+    RESEARCHERS,
+    RESEARCH_GROUP,
+    RESEARCH_PROJECTS,
+    TEACHING_COURSES,
+    UNCATEGORIZED;
 }

@@ -15,15 +15,12 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.Dataverse;
-import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
+import nl.knaw.dans.lib.dataverse.model.dataverse.Dataverse;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 public class DataverseResponseTest extends MapperFixture {
     private static final Class<?> classUnderTest = DataverseResponse.class;

@@ -13,33 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-public class DataverseContact {
-    private int displayOrder;
-    private String contactEmail;
+public class Dataset {
+    private DatasetVersion datasetVersion;
+    private DatasetVersion latestVersion;
 
-    public DataverseContact() {
+    public DatasetVersion getDatasetVersion() {
+        return datasetVersion;
     }
 
-    public DataverseContact(int displayOrder, String contactEmail) {
-        this.displayOrder = displayOrder;
-        this.contactEmail = contactEmail;
+    public void setDatasetVersion(DatasetVersion datasetVersion) {
+        this.datasetVersion = datasetVersion;
     }
 
-    public int getDisplayOrder() {
-        return displayOrder;
+    public DatasetVersion getLatestVersion() {
+        return latestVersion;
     }
 
-    public void setDisplayOrder(int displayOrder) {
-        this.displayOrder = displayOrder;
-    }
-
-    public String getContactEmail() {
-        return contactEmail;
-    }
-
-    public void setContactEmail(String contactEmail) {
-        this.contactEmail = contactEmail;
+    public void setLatestVersion(DatasetVersion latestVersion) {
+        this.latestVersion = latestVersion;
     }
 }

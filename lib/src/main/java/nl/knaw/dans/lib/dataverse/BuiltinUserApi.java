@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.example;
+package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.DataverseResponse;
-import nl.knaw.dans.lib.dataverse.model.dataverse.Dataverse;
-import nl.knaw.dans.lib.dataverse.ExampleBase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+public class BuiltinUserApi extends AbstractApi {
 
-public class DataverseView extends ExampleBase {
-    private static final Logger log = LoggerFactory.getLogger(DataverseView.class);
-
-    public static void main(String[] args) throws Exception {
-        DataverseResponse<Dataverse> r = client.dataverse("test3").view();
-        log.info("Description = {}", r.getData().getDescription());
+    protected BuiltinUserApi(HttpClientWrapper httpClientWrapper) {
+        super(httpClientWrapper);
     }
+
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-builtin-user
 }

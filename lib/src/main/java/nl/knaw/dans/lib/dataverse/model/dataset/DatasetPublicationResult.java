@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
 import java.net.URI;
 
-public class DataverseDatasetItem extends DataverseItem {
+public class DatasetPublicationResult {
+    private int id;
     private String identifier;
     private URI persistentUrl;
     private String protocol;
@@ -25,10 +26,13 @@ public class DataverseDatasetItem extends DataverseItem {
     private String publisher;
     private String publicationDate;
     private String storageIdentifier;
-    private String metadataLanguage;
 
-    public DataverseDatasetItem() {
-        super(DataverseItemType.dataset);
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getIdentifier() {
@@ -85,13 +89,5 @@ public class DataverseDatasetItem extends DataverseItem {
 
     public void setStorageIdentifier(String storageIdentifier) {
         this.storageIdentifier = storageIdentifier;
-    }
-
-    public String getMetadataLanguage() {
-        return metadataLanguage;
-    }
-
-    public void setMetadataLanguage(String metadataLanguage) {
-        this.metadataLanguage = metadataLanguage;
     }
 }

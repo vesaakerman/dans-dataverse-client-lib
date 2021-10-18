@@ -20,9 +20,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import nl.knaw.dans.lib.dataverse.model.DataverseDatasetItem;
-import nl.knaw.dans.lib.dataverse.model.DataverseItemType;
-import nl.knaw.dans.lib.dataverse.model.DataverseSubverseItem;
+import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseDatasetItem;
+import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseItemType;
+import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseSubverseItem;
 
 import java.io.IOException;
 import java.net.URI;
