@@ -15,8 +15,10 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import nl.knaw.dans.lib.dataverse.model.DataverseItem;
 import nl.knaw.dans.lib.dataverse.model.dataset.MetadataField;
 import org.junit.jupiter.api.BeforeEach;
 
@@ -36,6 +38,7 @@ public class MapperFixture {
         mapper = new ObjectMapper();
         SimpleModule module = new SimpleModule();
         module.addDeserializer(MetadataField.class, new MetadataFieldDeserializer());
+        module.addDeserializer(DataverseItem.class, new DataverseItemDeserializer());
         mapper.registerModule(module);
     }
 
@@ -54,6 +57,13 @@ public class MapperFixture {
             mapper.writeValueAsString(
                 mapper.readValue(testFile, c)),
             c);
+    }
+
+    protected <T> T roundTrip(File testFile, JavaType t) throws Exception {
+        return mapper.readValue(
+            mapper.writeValueAsString(
+                mapper.readValue(testFile, t)),
+            t);
     }
 
     protected File getTestJsonFileFor(Class<?> classUnderTest) {

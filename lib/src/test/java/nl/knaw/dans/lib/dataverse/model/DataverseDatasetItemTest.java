@@ -15,23 +15,22 @@
  */
 package nl.knaw.dans.lib.dataverse.model;
 
-public class DataverseSubverseItem extends DataverseItem {
-    private String title;
+import org.junit.jupiter.api.Test;
 
-    public DataverseSubverseItem() {
-        super(DataverseItemType.dataverse);
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class DataverseDatasetItemTest extends ModelFixture {
+    private static final Class<?> classUnderTest = DataverseDatasetItem.class;
+
+    @Test
+    public void canDeserialize() throws Exception {
+        DataverseItem i = mapper.readValue(getTestJsonFileFor(classUnderTest), DataverseItem.class);
+        assertEquals(classUnderTest, i.getClass());
     }
 
-    public DataverseSubverseItem(String title, int id) {
-        super(DataverseItemType.dataverse, id);
-        this.title = title;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
+    @Test
+    public void roundTrip() throws Exception {
+        DataverseItem i = roundTrip(getTestJsonFileFor(classUnderTest), DataverseItem.class);
+        assertEquals(classUnderTest, i.getClass());
     }
 }
