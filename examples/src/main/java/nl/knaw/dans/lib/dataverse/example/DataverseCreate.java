@@ -25,9 +25,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 
-public class CreateDataverse extends ExampleBase {
+public class DataverseCreate extends ExampleBase {
 
-    private static final Logger log = LoggerFactory.getLogger(CreateDataverse.class);
+    private static final Logger log = LoggerFactory.getLogger(DataverseCreate.class);
 
     public static void main(String[] args) throws Exception {
         Dataverse dataverse = new Dataverse();

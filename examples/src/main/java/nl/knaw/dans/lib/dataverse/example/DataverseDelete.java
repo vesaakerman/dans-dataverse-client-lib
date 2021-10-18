@@ -18,17 +18,12 @@ package nl.knaw.dans.lib.dataverse.example;
 import nl.knaw.dans.lib.dataverse.DataverseHttpResponse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
 import nl.knaw.dans.lib.dataverse.model.DataMessage;
-import nl.knaw.dans.lib.dataverse.model.Dataverse;
-import nl.knaw.dans.lib.dataverse.model.DataverseContact;
-import nl.knaw.dans.lib.dataverse.model.DataverseType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
+public class DataverseDelete extends ExampleBase {
 
-public class DeleteDataverse extends ExampleBase {
-
-    private static final Logger log = LoggerFactory.getLogger(DeleteDataverse.class);
+    private static final Logger log = LoggerFactory.getLogger(DataverseDelete.class);
 
     public static void main(String[] args) throws Exception {
         DataverseHttpResponse<DataMessage> r = client.dataverse("test").delete();

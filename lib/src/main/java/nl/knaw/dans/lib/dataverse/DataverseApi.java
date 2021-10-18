@@ -17,6 +17,7 @@ package nl.knaw.dans.lib.dataverse;
 
 import nl.knaw.dans.lib.dataverse.model.DataMessage;
 import nl.knaw.dans.lib.dataverse.model.Dataverse;
+import nl.knaw.dans.lib.dataverse.model.DataverseItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * API end-points that operate on a dataverse collection.
@@ -87,7 +89,7 @@ public class DataverseApi extends AbstractApi {
      *
      * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#show-contents-of-a-dataverse-collection
      */
-    public DataverseHttpResponse<Object> getContents() throws IOException, DataverseException {
+    public DataverseHttpResponse<List<DataverseItem>> getContents() throws IOException, DataverseException {
         log.trace("ENTER");
         return httpClientWrapper.get(subPath.resolve("contents"));
     }

@@ -16,20 +16,16 @@
 package nl.knaw.dans.lib.dataverse.example;
 
 import nl.knaw.dans.lib.dataverse.DataverseResponse;
-import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
+import nl.knaw.dans.lib.dataverse.model.Dataverse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-
-public class GetDatasetVersion extends ExampleBase {
-
-    private static final Logger log = LoggerFactory.getLogger(GetDatasetVersion.class);
+public class DataverseView extends ExampleBase {
+    private static final Logger log = LoggerFactory.getLogger(DataverseView.class);
 
     public static void main(String[] args) throws Exception {
-        DataverseResponse<List<DatasetVersion>> r = client.dataset(args[0]).getVersion(":latest");
-        log.info("Create Time: {}", r.getData().get(0).getCreateTime());
-        log.info("Version State: {}", r.getData().get(0).getVersionState());
+        DataverseResponse<Dataverse> r = client.dataverse("test3").view();
+        log.info("Description = {}", r.getData().getDescription());
     }
 }

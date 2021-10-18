@@ -17,16 +17,40 @@ package nl.knaw.dans.lib.dataverse.example;
 
 import nl.knaw.dans.lib.dataverse.DataverseHttpResponse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
-import nl.knaw.dans.lib.dataverse.model.DataMessage;
+import nl.knaw.dans.lib.dataverse.model.DataverseDatasetItem;
+import nl.knaw.dans.lib.dataverse.model.DataverseItem;
+import nl.knaw.dans.lib.dataverse.model.DataverseItemType;
+import nl.knaw.dans.lib.dataverse.model.DataverseSubverseItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class DataverseGetContents extends ExampleBase {
 
     private static final Logger log = LoggerFactory.getLogger(DataverseGetContents.class);
 
     public static void main(String[] args) throws Exception {
-        DataverseHttpResponse<Object> r = client.dataverse("root").getContents();
-        System.out.println(r.getEnvelopeAsString());
+        DataverseHttpResponse<List<DataverseItem>> r = client.dataverse("root").getContents();
+        r.getData().forEach(item -> {
+            log.info("type: {}", item.getType());
+            log.info("id: {}", item.getId());
+            if (DataverseItemType.dataverse.equals(item.getType())) {
+                DataverseSubverseItem subverseItem = (DataverseSubverseItem) item;
+                log.info("title: {}", subverseItem.getTitle());
+            }
+            else {
+                DataverseDatasetItem datasetItem = (DataverseDatasetItem) item;
+                log.info("protocol: {}", datasetItem.getProtocol());
+                log.info("authority: {}", datasetItem.getAuthority());
+                log.info("identifier: {}", datasetItem.getIdentifier());
+                log.info("persistent URL: {}", datasetItem.getPersistentUrl());
+                log.info("publisher: {}", datasetItem.getPublisher());
+                log.info("publication date: {}", datasetItem.getPublicationDate());
+                log.info("storage identifier: {}", datasetItem.getStorageIdentifier());
+                log.info("metadata language: {}", datasetItem.getMetadataLanguage());
+            }
+        });
+
     }
 }
