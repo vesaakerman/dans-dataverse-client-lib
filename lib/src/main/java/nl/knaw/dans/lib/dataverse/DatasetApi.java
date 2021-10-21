@@ -49,6 +49,10 @@ public class DatasetApi extends AbstractApi {
      *
      * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#get-version-of-a-dataset
      *
+     * @param version the version to get
+     * @return a list of dataset versions
+     * @throws IOException if there is an I/O error when communication with Dataverse
+     * @throws DataverseException if Dataverse fails to perform the request successfully
      */
     public DataverseResponse<List<DatasetVersion>> getVersion(String version) throws IOException, DataverseException {
         return getVersionedFromTarget("", version, List.class, DatasetVersion.class);
