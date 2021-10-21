@@ -15,22 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+abstract class AbstractApi {
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+    protected final HttpClientWrapper httpClientWrapper;
 
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    protected AbstractApi(HttpClientWrapper httpClientWrapper) {
+        this.httpClientWrapper = httpClientWrapper;
     }
-
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
-    }
-
 }

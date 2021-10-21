@@ -1,0 +1,29 @@
+[
+  {
+    "type": "dataverse",
+    "id": 4,
+    "title": "A Test Dataverse"
+  },
+  {
+    "type": "dataverse",
+    "id": 5,
+    "title": "A Test Dataverse 3"
+  },
+  {
+    "type": "dataverse",
+    "id": 6,
+    "title": "A Test Dataverse 4"
+  },
+  {
+    "id": 2,
+    "identifier": "DAR/G2Q1DE",
+    "persistentUrl": "https://doi.org/10.5072/DAR/G2Q1DE",
+    "protocol": "doi",
+    "authority": "10.5072",
+    "publisher": "DANS Archaeology Data Station (dev)",
+    "publicationDate": "2021-10-14",
+    "storageIdentifier": "file://10.5072/DAR/G2Q1DE",
+    "metadataLanguage": "undefined",
+    "type": "dataset"
+  }
+]

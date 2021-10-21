@@ -1,0 +1,21 @@
+{
+  "typeName": "author",
+  "multiple": true,
+  "typeClass": "compound",
+  "value": [
+    {
+      "authorName": {
+        "typeName": "authorName",
+        "multiple": false,
+        "typeClass": "primitive",
+        "value": "User01, Test01"
+      },
+      "authorAffiliation": {
+        "typeName": "authorAffiliation",
+        "multiple": false,
+        "typeClass": "primitive",
+        "value": "DANS"
+      }
+    }
+  ]
+}

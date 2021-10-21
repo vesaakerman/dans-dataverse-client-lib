@@ -15,22 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+public class BuiltinUserApi extends AbstractApi {
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
+    protected BuiltinUserApi(HttpClientWrapper httpClientWrapper) {
         super(httpClientWrapper);
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
-    }
-
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#create-a-builtin-user
 }

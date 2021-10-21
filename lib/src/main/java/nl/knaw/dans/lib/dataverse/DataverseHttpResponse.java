@@ -15,22 +15,23 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
-public class WorkflowsApi extends AbstractApi {
+public class DataverseHttpResponse<D> extends DataverseResponse<D> {
+    private final HttpResponse httpResponse;
 
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    protected DataverseHttpResponse(HttpResponse httpResponse, ObjectMapper customMapper, Class<?>... dataClass) throws IOException {
+        super(EntityUtils.toString(httpResponse.getEntity()), customMapper, dataClass);
+        if (dataClass.length > 2)
+            throw new IllegalArgumentException("Currently no more than one nested parameter type supported");
+        this.httpResponse = httpResponse;
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
+    public HttpResponse getHttpResponse() {
+        return httpResponse;
     }
-
 }

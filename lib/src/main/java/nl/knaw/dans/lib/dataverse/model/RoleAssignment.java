@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.model;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+public class RoleAssignment {
+    private String assignee;
+    private String role;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    public String getAssignee() {
+        return assignee;
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
+    public void setAssignee(String assignee) {
+        this.assignee = assignee;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 }

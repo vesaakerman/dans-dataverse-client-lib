@@ -15,22 +15,8 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+public interface MediaTypes {
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
-    }
-
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
-    }
-
+    String APPLICATION_JSON = "application/json";
+    String APPLICATION_JSON_LD = "application/json-ld";
 }

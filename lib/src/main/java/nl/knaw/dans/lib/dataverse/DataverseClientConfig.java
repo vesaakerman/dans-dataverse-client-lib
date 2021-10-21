@@ -15,22 +15,28 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+import java.net.URI;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+public class DataverseClientConfig {
+    private final URI baseUrl;
+    private final String apiToken;
 
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    /**
+     * Configuration data for the {@link DataverseClient}.
+     *
+     * @param baseUrl the base URL of the Dataverse server to communicate with
+     * @param apiToken the API token used for authorization
+     */
+    public DataverseClientConfig(URI baseUrl, String apiToken) {
+        this.baseUrl = baseUrl;
+        this.apiToken = apiToken;
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
+    public URI getBaseUrl() {
+        return baseUrl;
     }
 
+    public String getApiToken() {
+        return apiToken;
+    }
 }

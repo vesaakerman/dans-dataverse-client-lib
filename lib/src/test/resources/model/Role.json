@@ -1,0 +1,16 @@
+{
+  "alias": "datamanager",
+  "name": "Datamanager",
+  "permissions": [
+    "AddDataset",
+    "ViewUnpublishedDataset",
+    "DownloadFile",
+    "EditDataset",
+    "ManageDatasetPermissions",
+    "PublishDataset",
+    "DeleteDatasetDraft"
+  ],
+  "description": "A person who manages data.",
+  "id": 9,
+  "ownerId": 1
+}

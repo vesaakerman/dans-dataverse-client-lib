@@ -15,22 +15,12 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
-
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
+public class TokenApi extends AbstractApi {
+    protected TokenApi(HttpClientWrapper httpClientWrapper) {
         super(httpClientWrapper);
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
-    }
-
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#find-a-token-s-expiration-date
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#recreate-a-token
+    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-a-token
 }

@@ -1,0 +1,12 @@
+{
+  "status": "OK",
+  "data": {
+    "id": 1,
+    "alias": "root",
+    "name": "Dataverse Name",
+    "permissionRoot": true,
+    "description": "The root dataverse.",
+    "dataverseType": "UNCATEGORIZED",
+    "creationDate": "2021-10-02T12:22:05Z"
+  }
+}

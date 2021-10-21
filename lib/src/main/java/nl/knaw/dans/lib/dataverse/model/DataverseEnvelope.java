@@ -13,24 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.model;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+public class DataverseEnvelope<D> {
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+    private String status;
+    private String message;
+    private D data;
 
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    public String getStatus() {
+        return status;
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
+    public void setStatus(String status) {
+        this.status = status;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public D getData() {
+        return data;
+    }
+
+    public void setData(D data) {
+        this.data = data;
+    }
 }

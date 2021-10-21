@@ -13,24 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+import java.util.List;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+public class PrimitiveMultiValueField extends MetadataField {
+    private List<String> value;
 
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    public PrimitiveMultiValueField() {
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
+    public PrimitiveMultiValueField(String typeClass, String typeName, boolean multiple, List<String> value) {
+        super(typeClass, typeName, multiple);
+        this.value = value;
     }
 
+    public List<String> getValue() {
+        return value;
+    }
+
+    public void setValue(List<String> value) {
+        this.value = value;
+    }
 }

@@ -13,24 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+public class ControlledSingleValueField extends MetadataField implements SingleValueField{
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+    private String value;
 
-public class WorkflowsApi extends AbstractApi {
-
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    public ControlledSingleValueField() {
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
+    public ControlledSingleValueField(String typeClass, String typeName, boolean multiple, String value) {
+        super(typeClass, typeName, multiple);
+        this.value = value;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.model.dataset;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+import java.util.List;
+import java.util.Map;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+public class CompoundField extends MetadataField {
 
-public class WorkflowsApi extends AbstractApi {
+    private List<Map<String, SingleValueField>> value;
 
-    private static final Path subPath = Paths.get("api/workflows/");
-
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
+    public CompoundField() {
     }
 
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
+    public CompoundField(String typeClass, String typeName, boolean multiple, List<Map<String, SingleValueField>> value) {
+        super(typeClass, typeName, multiple);
+        this.value = value;
     }
 
+    public List<Map<String, SingleValueField>> getValue() {
+        return value;
+    }
+
+    public void setValue(List<Map<String, SingleValueField>> value) {
+        this.value = value;
+    }
 }

@@ -13,24 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse;
+package nl.knaw.dans.lib.dataverse.example;
 
-import nl.knaw.dans.lib.dataverse.model.workflow.ResumeMessage;
+import nl.knaw.dans.lib.dataverse.DataverseHttpResponse;
+import nl.knaw.dans.lib.dataverse.ExampleBase;
+import nl.knaw.dans.lib.dataverse.model.DataMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+public class DataverseGetStorageSize extends ExampleBase {
 
-public class WorkflowsApi extends AbstractApi {
+    private static final Logger log = LoggerFactory.getLogger(DataverseGetStorageSize.class);
 
-    private static final Path subPath = Paths.get("api/workflows/");
+    public static void main(String[] args) throws Exception {
+        DataverseHttpResponse<DataMessage> r = client.dataverse("root").getStorageSize();
+        log.info("Storage size: {}", r.getData().getMessage());
 
-    public WorkflowsApi(HttpClientWrapper httpClientWrapper) {
-        super(httpClientWrapper);
     }
-
-    public DataverseHttpResponse<Object> resume(String invocationId, ResumeMessage resumeMessage) throws IOException, DataverseException {
-        return httpClientWrapper.postModelObjectAsJson(subPath.resolve(invocationId), resumeMessage, Object.class);
-    }
-
 }
