@@ -25,12 +25,6 @@
  * user acounts, etc. The following example shows how you would retrieve the description for the root dataverse. The API token should of course be replaced with
  * a valid one, if you try this out.
  *
- */
-package nl.knaw.dans.lib.dataverse;
-
-
-/*
-
  * <!-- @formatter:off -->
  * ```java
  *  // Replace the second constructor argument with your Dataverse API token
@@ -40,5 +34,5 @@ package nl.knaw.dans.lib.dataverse;
  *  System.out.println(r.getData().getDescription());
  * ```
  * <!-- @formatter:on -->
-
  */
+package nl.knaw.dans.lib.dataverse;

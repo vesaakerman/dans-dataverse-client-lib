@@ -44,7 +44,6 @@ public class DataverseClient {
      *
      * @param config     configuration for this DataverseClient
      * @param httpClient the `org.apache.http.client.HttpClient` to use when interacting with Dataverse
-     * @param objectMapper the object mapper to use
      */
     public DataverseClient(DataverseClientConfig config, HttpClient httpClient, ObjectMapper objectMapper) {
         if (objectMapper == null)
