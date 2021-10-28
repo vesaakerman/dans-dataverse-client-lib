@@ -25,7 +25,8 @@ public class DataverseView extends ExampleBase {
     private static final Logger log = LoggerFactory.getLogger(DataverseView.class);
 
     public static void main(String[] args) throws Exception {
-        DataverseResponse<Dataverse> r = client.dataverse("test3").view();
+        DataverseResponse<Dataverse> r = client.dataverse("root").view();
+        log.info("Response message = {}", r.getEnvelopeAsJson().toPrettyString());
         log.info("Description = {}", r.getData().getDescription());
     }
 }
