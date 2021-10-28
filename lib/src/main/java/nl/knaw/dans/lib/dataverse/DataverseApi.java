@@ -27,6 +27,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -262,8 +263,8 @@ public class DataverseApi extends AbstractApi {
      */
     public DataverseHttpResponse<DataMessage> setMetadataBlocksRoot(boolean isRoot) throws IOException, DataverseException {
         log.trace("ENTER");
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return httpClientWrapper.putTextString(subPath.resolve("metadatablocks/isRoot"), Boolean.toString(isRoot), 
+                Collections.<String, String>emptyMap(), Collections.<String, String>emptyMap(), DataMessage.class);
     }
 
     /**

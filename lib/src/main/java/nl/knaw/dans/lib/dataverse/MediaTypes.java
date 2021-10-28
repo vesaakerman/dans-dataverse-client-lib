@@ -19,4 +19,5 @@ public interface MediaTypes {
 
     String APPLICATION_JSON = "application/json";
     String APPLICATION_JSON_LD = "application/json-ld";
+    String TEXT_PLAIN = "text/plain";
 }
