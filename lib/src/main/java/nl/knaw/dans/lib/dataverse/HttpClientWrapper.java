@@ -106,6 +106,10 @@ class HttpClientWrapper implements MediaTypes {
         return wrap(putString(subPath, s, APPLICATION_JSON_LD, parameters, headers), c);
     }
 
+    public <D> DataverseHttpResponse<D> putTextString(Path subPath, String s, Map<String, String> parameters, Map<String, String> headers, Class<?>... c) throws IOException, DataverseException {
+        return wrap(putString(subPath, s, TEXT_PLAIN, parameters, headers), c);
+    }
+    
     private HttpResponse putString(Path subPath, String s, String mediaType, Map<String, String> parameters, Map<String, String> headers) throws IOException, DataverseException {
         HttpPut put = new HttpPut(buildURi(subPath, parameters));
         put.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
