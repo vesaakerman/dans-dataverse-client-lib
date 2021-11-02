@@ -250,10 +250,9 @@ public class DataverseApi extends AbstractApi {
      *
      * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#determine-if-a-dataverse-collection-inherits-its-metadata-blocks-from-its-parent
      */
-    public DataverseHttpResponse<DataMessage> isMetadataBlocksRoot() throws IOException, DataverseException {
+    public DataverseHttpResponse<Boolean> isMetadataBlocksRoot() throws IOException, DataverseException {
         log.trace("ENTER");
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return httpClientWrapper.get(subPath.resolve("metadatablocks/isRoot"), Boolean.class);
     }
 
     /**
