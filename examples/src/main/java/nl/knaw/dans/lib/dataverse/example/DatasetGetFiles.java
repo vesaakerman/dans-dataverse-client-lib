@@ -28,7 +28,9 @@ public class DatasetGetFiles extends ExampleBase {
     private static final Logger log = LoggerFactory.getLogger(DatasetGetFiles.class);
 
     public static void main(String[] args) throws Exception {
-        DataverseResponse<List<FileMeta>> r = client.dataset(args[0]).getFiles(args[1]);
+        String persistentId = args[0];
+        String version = args[1];
+        DataverseResponse<List<FileMeta>> r = client.dataset(persistentId).getFiles(version);
         log.info("Response message: {}", r.getEnvelopeAsJson().toPrettyString());
         log.info("Label: {}", r.getData().get(0).getLabel());
         log.info("DirectoryLabel: {}", r.getData().get(0).getDirectoryLabel());

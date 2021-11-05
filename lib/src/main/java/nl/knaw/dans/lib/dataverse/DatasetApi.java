@@ -110,16 +110,10 @@ public class DatasetApi extends AbstractApi {
         if (isPersistentId) {
           HashMap<String, String> parameters = new HashMap<>();
           parameters.put("persistentId", id);
-          return httpClientWrapper.get(buildPath(persistendId, version, endPoint), parameters, outputClass);
+          return httpClientWrapper.get(buildPath(targetBase, persistendId, "versions", version, endPoint), parameters, outputClass);
         }
         else {
-          return httpClientWrapper.get(buildPath(id, version, endPoint), outputClass);
+          return httpClientWrapper.get(buildPath(targetBase, id, "versions", version, endPoint), outputClass);
         }
     }
-
-  private Path buildPath(String id, String version, String endPoint) {
-      Path path = targetBase.resolve(id).resolve("versions/");
-      Path withVersion = version.equals(":latest") ? path : path.resolve(version);
-      return withVersion.resolve(endPoint);
-  }
 }

@@ -15,11 +15,21 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import java.nio.file.Path;
+
 abstract class AbstractApi {
 
     protected final HttpClientWrapper httpClientWrapper;
 
     protected AbstractApi(HttpClientWrapper httpClientWrapper) {
         this.httpClientWrapper = httpClientWrapper;
+    }
+
+    protected Path buildPath(Path base, String... components) {
+        Path p = base;
+        for (String c: components) {
+            p  = p.resolve(c + "/");
+        }
+        return p;
     }
 }
