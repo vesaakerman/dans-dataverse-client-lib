@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,9 +55,19 @@ public class DatasetApi extends AbstractApi {
         return getVersionedFromTarget("", version, List.class, DatasetVersion.class);
     }
 
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#list-files-in-a-dataset
+     *
+     */
+    public DataverseResponse<List<FileMeta>> getFiles(String version) throws IOException, DataverseException {
+        log.trace("ENTER");
+        return getVersionedFromTarget("files", version, List.class, FileMeta.class);
+    }
+
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#export-metadata-of-a-dataset-in-various-formats
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#schema-org-json-ld
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-files-in-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#view-dataset-files-and-folders-as-a-directory-index
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-all-metadata-blocks-for-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-single-metadata-block-for-a-dataset
@@ -97,11 +108,18 @@ public class DatasetApi extends AbstractApi {
     private <D> DataverseHttpResponse<D> getVersionedFromTarget(String endPoint, String version, Class<?>... outputClass) throws IOException, DataverseException {
         log.trace("ENTER");
         if (isPersistentId) {
-            HashMap<String, String> parameters = new HashMap<>();
-            parameters.put("persistentId", id);
-            return httpClientWrapper.get(targetBase.resolve(persistendId).resolve("versions/").resolve(endPoint), parameters, outputClass);
-        } else {
-            return httpClientWrapper.get(targetBase.resolve(id).resolve("versions/").resolve(endPoint), outputClass);
+          HashMap<String, String> parameters = new HashMap<>();
+          parameters.put("persistentId", id);
+          return httpClientWrapper.get(buildPath(persistendId, version, endPoint), parameters, outputClass);
+        }
+        else {
+          return httpClientWrapper.get(buildPath(id, version, endPoint), outputClass);
         }
     }
+
+  private Path buildPath(String id, String version, String endPoint) {
+      Path path = targetBase.resolve(id).resolve("versions/");
+      Path withVersion = version.equals(":latest") ? path : path.resolve(version);
+      return withVersion.resolve(endPoint);
+  }
 }

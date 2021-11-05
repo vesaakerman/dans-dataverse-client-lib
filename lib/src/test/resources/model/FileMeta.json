@@ -1,0 +1,21 @@
+{
+  "label": "deposit-api.jpg",
+  "restricted": true,
+  "version": 2,
+  "datasetVersionId": 1,
+  "dataFile": {
+    "id": 3,
+    "persistentId": "",
+    "pidURL": "",
+    "filename": "deposit-api.jpg",
+    "contentType": "image/jpeg",
+    "filesize": 1319202,
+    "storageIdentifier": "file://17cb1aeb1d8-1d03708f8bfe",
+    "rootDataFileId": -1,
+    "checksum": {
+      "type": "SHA-1",
+      "value": "31cc50f4bbef69aed5658b8aef69cc54b67138be"
+    },
+    "creationDate": "2021-10-24"
+  }
+}
