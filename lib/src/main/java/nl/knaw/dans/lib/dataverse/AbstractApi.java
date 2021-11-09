@@ -15,6 +15,8 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.nio.file.Path;
 
 abstract class AbstractApi {
@@ -27,8 +29,9 @@ abstract class AbstractApi {
 
     protected Path buildPath(Path base, String... components) {
         Path p = base;
-        for (String c: components) {
-            p  = p.resolve(c + "/");
+        for (String c : components) {
+            if (StringUtils.isNotBlank(c))
+                p = p.resolve(c + "/");
         }
         return p;
     }
