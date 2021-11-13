@@ -15,8 +15,8 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
-import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
+import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,17 +43,26 @@ public class DatasetApi extends AbstractApi {
         this.isPersistentId = isPersistentId;
     }
 
-
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#get-json-representation-of-a-dataset
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-versions-of-a-dataset
+
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#list-versions-of-a-dataset
+     */
+    public DataverseResponse<List<DatasetVersion>> getAllVersions() throws IOException, DataverseException {
+        // Not specifying a version results in getting all versions.
+        return getVersionedFromTarget("", "", List.class, DatasetVersion.class);
+    }
+
     /**
      * See [Dataverse API Guide].
      *
      * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#get-version-of-a-dataset
-     *
      */
     public DataverseResponse<DatasetVersion> getVersion(String version) throws IOException, DataverseException {
-        if (StringUtils.isBlank(version)) throw new IllegalArgumentException("Argument 'version' may not be empty");
+        if (StringUtils.isBlank(version))
+            throw new IllegalArgumentException("Argument 'version' may not be empty");
         return getVersionedFromTarget("", version, DatasetVersion.class);
     }
 
@@ -61,7 +70,6 @@ public class DatasetApi extends AbstractApi {
      * See [Dataverse API Guide].
      *
      * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#list-files-in-a-dataset
-     *
      */
     public DataverseResponse<List<FileMeta>> getFiles(String version) throws IOException, DataverseException {
         log.trace("ENTER");
@@ -103,19 +111,18 @@ public class DatasetApi extends AbstractApi {
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#configure-a-dataset-to-use-a-specific-file-store
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#view-the-timestamps-on-a-dataset
 
-
     /*
      * Helper methods
      */
     private <D> DataverseHttpResponse<D> getVersionedFromTarget(String endPoint, String version, Class<?>... outputClass) throws IOException, DataverseException {
         log.trace("ENTER");
         if (isPersistentId) {
-          HashMap<String, String> parameters = new HashMap<>();
-          parameters.put("persistentId", id);
-          return httpClientWrapper.get(buildPath(targetBase, persistendId, "versions", version, endPoint), parameters, outputClass);
+            HashMap<String, String> parameters = new HashMap<>();
+            parameters.put("persistentId", id);
+            return httpClientWrapper.get(buildPath(targetBase, persistendId, "versions", version, endPoint), parameters, outputClass);
         }
         else {
-          return httpClientWrapper.get(buildPath(targetBase, id, "versions", version, endPoint), outputClass);
+            return httpClientWrapper.get(buildPath(targetBase, id, "versions", version, endPoint), outputClass);
         }
     }
 }
