@@ -17,8 +17,8 @@ package nl.knaw.dans.lib.dataverse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseItem;
 import nl.knaw.dans.lib.dataverse.model.dataset.MetadataField;
+import nl.knaw.dans.lib.dataverse.model.dataverse.DataverseItem;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.HttpClients;
 
@@ -29,6 +29,7 @@ public class DataverseClient {
 
     private final HttpClientWrapper httpClientWrapper;
     private final ObjectMapper mapper;
+    private SearchApi searchApi;
 
     /**
      * Creates a DataverseClient.
@@ -72,4 +73,9 @@ public class DataverseClient {
         return new DataverseApi(httpClientWrapper, alias);
     }
 
+    public SearchApi search() {
+        if (searchApi == null)
+            searchApi = new SearchApi(httpClientWrapper);
+        return searchApi;
+    }
 }
