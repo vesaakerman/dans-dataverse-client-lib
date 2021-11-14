@@ -15,95 +15,113 @@
  */
 package nl.knaw.dans.lib.dataverse.model.file;
 
+import nl.knaw.dans.lib.dataverse.model.file.prestaged.Checksum;
+import nl.knaw.dans.lib.dataverse.model.file.prestaged.PrestagedFile;
+
 import java.util.List;
 
 public class FileMeta {
 
-  private String label;
-  private String description;
-  private String directoryLabel;
-  private int version;
-  private int datasetVersionId;
-  private Boolean restricted;
-  private List<String> categories; // TODO Enum or vocab? https://guides.dataverse.org/en/latest/user/dataset-management.html?highlight=category#file-tags
-  private DataFile dataFile;
-  private Boolean forceReplace;
+    private String label;
+    private String description;
+    private String directoryLabel;
+    private int version;
+    private int datasetVersionId;
+    private Boolean restricted;
+    private List<String> categories; // TODO Enum or vocab? https://guides.dataverse.org/en/latest/user/dataset-management.html?highlight=category#file-tags
+    private DataFile dataFile;
+    private Boolean forceReplace;
 
-  public FileMeta() {
-  }
+    public FileMeta() {
+    }
 
-  public String getLabel() {
-    return label;
-  }
+    public PrestagedFile toPrestagedFile() {
+        if (dataFile == null)
+            throw new IllegalArgumentException("Cannot convert to PrestagedFile if dataFile is null");
+        PrestagedFile p = new PrestagedFile();
+        p.setStorageIdentifier(dataFile.getStorageIdentifier());
+        p.setFileName(label);
+        p.setMimeType(dataFile.getContentType());
+        p.setChecksum(new Checksum(dataFile.getChecksum().getType(), dataFile.getChecksum().getValue()));
+        p.setDescription(description);
+        p.setDirectoryLabel(directoryLabel);
+        p.setCategories(categories);
+        p.setRestrict(restricted);
+        p.setForceReplace(forceReplace);
+        return p;
+    }
 
-  public void setLabel(String label) {
-    this.label = label;
-  }
+    public String getLabel() {
+        return label;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public void setLabel(String label) {
+        this.label = label;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public String getDirectoryLabel() {
-    return directoryLabel;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setDirectoryLabel(String directoryLabel) {
-    this.directoryLabel = directoryLabel;
-  }
+    public String getDirectoryLabel() {
+        return directoryLabel;
+    }
 
-  public Boolean getRestricted() {
-    return restricted;
-  }
+    public void setDirectoryLabel(String directoryLabel) {
+        this.directoryLabel = directoryLabel;
+    }
 
-  public void setRestricted(Boolean restricted) {
-    this.restricted = restricted;
-  }
+    public Boolean getRestricted() {
+        return restricted;
+    }
 
-  public List<String> getCategories() {
-    return categories;
-  }
+    public void setRestricted(Boolean restricted) {
+        this.restricted = restricted;
+    }
 
-  public void setCategories(List<String> categories) {
-    this.categories = categories;
-  }
+    public List<String> getCategories() {
+        return categories;
+    }
 
-  public Boolean getForceReplace() {
-    return forceReplace;
-  }
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
 
-  public void setForceReplace(Boolean forceReplace) {
-    this.forceReplace = forceReplace;
-  }
+    public Boolean getForceReplace() {
+        return forceReplace;
+    }
 
-  public DataFile getDataFile() {
-    return dataFile;
-  }
+    public void setForceReplace(Boolean forceReplace) {
+        this.forceReplace = forceReplace;
+    }
 
-  public void setDataFile(DataFile dataFile) {
-    this.dataFile = dataFile;
-  }
+    public DataFile getDataFile() {
+        return dataFile;
+    }
 
-  public int getDatasetVersionId() {
-    return datasetVersionId;
-  }
+    public void setDataFile(DataFile dataFile) {
+        this.dataFile = dataFile;
+    }
 
-  public void setDatasetVersionId(int datasetVersionId) {
-    this.datasetVersionId = datasetVersionId;
-  }
+    public int getDatasetVersionId() {
+        return datasetVersionId;
+    }
 
-  public int getVersion() {
-    return version;
-  }
+    public void setDatasetVersionId(int datasetVersionId) {
+        this.datasetVersionId = datasetVersionId;
+    }
 
-  public void setVersion(int version) {
-    this.version = version;
-  }
+    public int getVersion() {
+        return version;
+    }
 
-  // TODO public ... toPrestagedFile = ???
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
 }
 
