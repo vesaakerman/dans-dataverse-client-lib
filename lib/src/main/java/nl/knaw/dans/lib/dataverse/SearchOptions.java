@@ -23,7 +23,7 @@ import java.util.List;
  * Options for searching, such as further narrowing down the result, what to include in the result items and which part of the result to return, and in what order.
  * See [Dataverse API Guide] for details.
  *
- * [Dataverse API Guide]:  * https://guides.dataverse.org/en/latest/api/search.html#parameters
+ * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/search.html#parameters
  */
 public class SearchOptions {
     public enum Order {
