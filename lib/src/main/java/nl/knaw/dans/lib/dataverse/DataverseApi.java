@@ -42,6 +42,7 @@ public class DataverseApi extends AbstractApi {
 
     private static final Logger log = LoggerFactory.getLogger(DataverseApi.class);
     private final Path subPath;
+    private static final String publish = "actions/:publish";
 
     protected DataverseApi(HttpClientWrapper httpClientWrapper, String alias) {
         super(httpClientWrapper);
@@ -315,8 +316,7 @@ public class DataverseApi extends AbstractApi {
      */
     public DataverseHttpResponse<DataMessage> publish() throws IOException, DataverseException {
         log.trace("ENTER");
-        // TODO: implement
-        throw new UnsupportedOperationException();
+        return httpClientWrapper.postJsonString(subPath.resolve(publish), "", new HashMap<>(), new HashMap<>(), Dataverse.class);
     }
 
     /**

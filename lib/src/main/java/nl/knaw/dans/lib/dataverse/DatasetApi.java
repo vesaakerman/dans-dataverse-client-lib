@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import nl.knaw.dans.lib.dataverse.model.dataset.DatasetPublicationResult;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
 import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +33,7 @@ public class DatasetApi extends AbstractApi {
 
     private static final Logger log = LoggerFactory.getLogger(DatasetApi.class);
     private static final String persistendId = ":persistentId/";
+    private static final String publish = "actions/:publish";
 
     private final Path targetBase;
     private final String id;
@@ -77,6 +79,19 @@ public class DatasetApi extends AbstractApi {
         return getVersionedFromTarget("files", version, List.class, FileMeta.class);
     }
 
+    /**
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]:https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataset
+     */
+    public DataverseResponse<List<FileMeta>> publish() throws IOException, DataverseException {
+        Path path = buildPath(targetBase, persistendId, publish);
+        HashMap<String, List<String>> parameters = new HashMap<>();
+        parameters.put("persistentId", Collections.singletonList(id));
+        parameters.put("type", Collections.singletonList("major"));
+        return httpClientWrapper.postJsonString(path, "", parameters, new HashMap<>(), DatasetPublicationResult.class);
+    }
+
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#export-metadata-of-a-dataset-in-various-formats
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#schema-org-json-ld
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#view-dataset-files-and-folders-as-a-directory-index
@@ -85,7 +100,6 @@ public class DatasetApi extends AbstractApi {
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#update-metadata-for-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#edit-dataset-metadata
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-dataset-metadata
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-dataset-draft
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#set-citation-date-field-type-for-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#revert-citation-date-field-type-to-default-for-dataset

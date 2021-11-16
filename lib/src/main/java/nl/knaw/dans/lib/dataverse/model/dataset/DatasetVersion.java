@@ -31,6 +31,8 @@ public class DatasetVersion {
     private String lastUpdateTime; // TODO: timestamp?
     private String releaseTime; // TODO: timestamp?
     private String createTime; // TODO: timestamp?
+    private String distributionDate; // TODO: timestamp?
+    private String productionDate; // TODO: timestamp?
     private boolean fileAccessRequest;
     private String termsOfUse;
     private String termsOfAccess;
@@ -127,6 +129,22 @@ public class DatasetVersion {
 
     public void setCreateTime(String createTime) {
         this.createTime = createTime;
+    }
+
+    public String getDistributionDate() {
+        return distributionDate;
+    }
+
+    public void setDistributionDate(String distributionDate) {
+        this.distributionDate = distributionDate;
+    }
+
+    public String getProductionDate() {
+        return productionDate;
+    }
+
+    public void setProductionDate(String productionDate) {
+        this.productionDate = productionDate;
     }
 
     public boolean isFileAccessRequest() {
