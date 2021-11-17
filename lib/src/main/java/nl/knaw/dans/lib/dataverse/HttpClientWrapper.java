@@ -168,7 +168,7 @@ class HttpClientWrapper implements MediaTypes {
     private HttpResponse dispatch(HttpUriRequest request) throws IOException, DataverseException {
         request.setHeader(HEADER_X_DATAVERSE_KEY, config.getApiToken());
         HttpResponse r = httpClient.execute(request);
-        if (r.getStatusLine().getStatusCode() >= 200 || r.getStatusLine().getStatusCode() < 300)
+        if (r.getStatusLine().getStatusCode() >= 200 && r.getStatusLine().getStatusCode() < 300)
             return r;
         else
             throw new DataverseException(r.getStatusLine().getStatusCode(), EntityUtils.toString(r.getEntity()), r);
