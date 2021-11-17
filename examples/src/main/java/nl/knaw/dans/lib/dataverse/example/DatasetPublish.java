@@ -17,11 +17,10 @@ package nl.knaw.dans.lib.dataverse.example;
 
 import nl.knaw.dans.lib.dataverse.DataverseResponse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
-import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
+import nl.knaw.dans.lib.dataverse.model.dataset.DatasetPublicationResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 
 public class DatasetPublish extends ExampleBase {
 
@@ -30,8 +29,9 @@ public class DatasetPublish extends ExampleBase {
     public static void main(String[] args) throws Exception {
         String persistentId = args[0];
         log.info("--- BEGIN JSON OBJECT ---");
-        DataverseResponse<List<FileMeta>> r = client.dataset(persistentId).publish();
+        DataverseResponse<DatasetPublicationResult> r = client.dataset(persistentId).publish();
         log.info("--- END JSON OBJECT ---");
         log.info("Response message: {}", r.getEnvelopeAsJson().toPrettyString());
+        log.info("Persistent Url: {}", r.getData().getPersistentUrl());
     }
 }

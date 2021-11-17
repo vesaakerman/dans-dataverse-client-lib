@@ -316,7 +316,7 @@ public class DataverseApi extends AbstractApi {
      */
     public DataverseHttpResponse<DataMessage> publish() throws IOException, DataverseException {
         log.trace("ENTER");
-        return httpClientWrapper.postJsonString(subPath.resolve(publish), "", new HashMap<>(), new HashMap<>(), Dataverse.class);
+        return httpClientWrapper.postJsonString(subPath.resolve(publish), "", new HashMap<>(), new HashMap<>(), DataMessage.class);
     }
 
     /**

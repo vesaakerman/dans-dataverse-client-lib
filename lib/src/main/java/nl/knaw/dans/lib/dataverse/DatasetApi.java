@@ -82,9 +82,9 @@ public class DatasetApi extends AbstractApi {
     /**
      * See [Dataverse API Guide].
      *
-     * [Dataverse API Guide]:https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataset
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#publish-a-dataset
      */
-    public DataverseResponse<List<FileMeta>> publish() throws IOException, DataverseException {
+    public DataverseResponse<DatasetPublicationResult> publish() throws IOException, DataverseException {
         Path path = buildPath(targetBase, persistendId, publish);
         HashMap<String, List<String>> parameters = new HashMap<>();
         parameters.put("persistentId", Collections.singletonList(id));
