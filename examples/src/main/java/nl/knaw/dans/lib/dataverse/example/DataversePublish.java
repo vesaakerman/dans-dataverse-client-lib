@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse.example;
 
+import nl.knaw.dans.lib.dataverse.DataverseException;
 import nl.knaw.dans.lib.dataverse.DataverseHttpResponse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
 import nl.knaw.dans.lib.dataverse.model.DataMessage;
@@ -27,7 +28,9 @@ public class DataversePublish extends ExampleBase {
 
     public static void main(String[] args) throws Exception {
         log.info("--- CREATE FIRST A test DATAVERSE IF IT DOESN'T ALREADY EXIST ---");
-        DataverseCreate.main(new String[]{""});
+        try {
+            DataverseCreate.main(new String[]{""});
+        } catch (DataverseException e) {}
         log.info("====================================");
 
         log.info("--- PUBLISH test DATAVERSE ---");
