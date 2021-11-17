@@ -15,6 +15,8 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
+import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
+
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public class DatasetVersion {
     private String authority;
     private String identifier;
     private Map<String, MetadataBlock> metadataBlocks;
-    private List<Object> files;
+    private List<FileMeta> files;
 
     public int getId() {
         return id;
@@ -193,11 +195,11 @@ public class DatasetVersion {
         this.metadataBlocks = metadataBlocks;
     }
 
-    public List<Object> getFiles() {
+    public List<FileMeta> getFiles() {
         return files;
     }
 
-    public void setFiles(List<Object> files) {
+    public void setFiles(List<FileMeta> files) {
         this.files = files;
     }
 }

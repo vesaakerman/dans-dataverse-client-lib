@@ -18,6 +18,7 @@ package nl.knaw.dans.lib.dataverse.example;
 import nl.knaw.dans.lib.dataverse.DataverseResponse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
+import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,15 @@ public class DatasetGetAllVersions extends ExampleBase {
         String persistentId = args[0];
         DataverseResponse<List<DatasetVersion>> r = client.dataset(persistentId).getAllVersions();
         log.info("Response message: {}", r.getEnvelopeAsJson().toPrettyString());
-        log.info("Create Time: {}", r.getData().get(0).getCreateTime());
-        log.info("Version State: {}", r.getData().get(0).getVersionState());
+
+        if (r.getData().size() > 0) {
+            DatasetVersion firstVersion = r.getData().get(0);
+            log.info("First Version Create Time: {}", firstVersion.getCreateTime());
+            log.info("First Version State: {}", firstVersion.getVersionState());
+            if (firstVersion.getFiles().size() > 0) {
+                FileMeta firstFile = firstVersion.getFiles().get(0);
+                log.info("First File Label: {}", firstFile.getLabel());
+            }
+        }
     }
 }
