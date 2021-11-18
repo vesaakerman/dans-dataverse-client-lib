@@ -23,7 +23,7 @@
         <groupId>nl.knaw.dans.shared</groupId>
         <artifactId>dans-java-project</artifactId>
         <version>7.0.0</version>
-        <relativePath />
+        <relativePath/>
     </parent>
     <groupId>nl.knaw.dans</groupId>
     <artifactId>dans-dataverse-client-lib-examples</artifactId>
@@ -73,6 +73,12 @@
     </pluginRepositories>
     <build>
         <plugins>
+            <plugin>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
