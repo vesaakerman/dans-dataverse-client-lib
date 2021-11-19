@@ -28,8 +28,8 @@ public class DatasetAwaitUnlock extends ExampleBase {
     // this program should always return a message about successful execution.
     public static void main(String[] args) throws Exception {
         String persistentId = args[0];
-        int awaitLockStateMaxNumberOfRetries = Integer.valueOf(args[1]);
-        int awaitLockStateMillisecondsBetweenRetries = Integer.valueOf(args[2]);
+        int awaitLockStateMaxNumberOfRetries = Integer.parseInt(args[1]);
+        int awaitLockStateMillisecondsBetweenRetries = Integer.parseInt(args[2]);
         client.dataset(persistentId).awaitUnlock(awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
         log.info("awaitUnLock method executed successfully");
     }
