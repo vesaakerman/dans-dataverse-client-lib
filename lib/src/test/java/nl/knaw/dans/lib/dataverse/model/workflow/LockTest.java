@@ -37,5 +37,4 @@ class LockTest extends ModelWorkflowFixture {
         Lock lock = roundTrip(getTestJsonFileFor(classUnderTest), classUnderTest);
         assertEquals(classUnderTest, lock.getClass());
     }
-
 }

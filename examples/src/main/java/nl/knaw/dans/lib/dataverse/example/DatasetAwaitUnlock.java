@@ -15,12 +15,10 @@
  */
 package nl.knaw.dans.lib.dataverse.example;
 
-import nl.knaw.dans.lib.dataverse.DataverseException;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 
 public class DatasetAwaitUnlock extends ExampleBase {
 
@@ -32,14 +30,7 @@ public class DatasetAwaitUnlock extends ExampleBase {
         String persistentId = args[0];
         int awaitLockStateMaxNumberOfRetries = Integer.valueOf(args[1]);
         int awaitLockStateMillisecondsBetweenRetries = Integer.valueOf(args[2]);
-        try {
-            client.dataset(persistentId).awaitUnlock(awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
-            log.info("awaitUnLock method executed successfully");
-        } catch (RuntimeException e) {
-            log.error(String.format("awaitUnLock method threw a RuntimeException: %s", e.getMessage()));
-        }
-        catch (IOException | DataverseException | InterruptedException e) {
-            log.error(String.format("awaitUnLock method threw an Exception: %s", e.getMessage()));
-        }
+        client.dataset(persistentId).awaitUnlock(awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
+        log.info("awaitUnLock method executed successfully");
     }
 }
