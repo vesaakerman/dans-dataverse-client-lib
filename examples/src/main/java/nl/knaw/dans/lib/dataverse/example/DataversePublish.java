@@ -27,13 +27,7 @@ public class DataversePublish extends ExampleBase {
     private static final Logger log = LoggerFactory.getLogger(DataversePublish.class);
 
     public static void main(String[] args) throws Exception {
-        log.info("--- CREATE FIRST A test DATAVERSE IF IT DOESN'T ALREADY EXIST ---");
-        try {
-            DataverseCreate.main(new String[]{""});
-        } catch (DataverseException e) {}
-        log.info("====================================");
-
-        log.info("--- PUBLISH test DATAVERSE ---");
+        // Notice: the test dataverse instance has to exist before calling this method
         log.info("--- BEGIN JSON OBJECT ---");
         DataverseHttpResponse<DataMessage> r = client.dataverse("test").publish();
         log.info("--- END JSON OBJECT ---");
