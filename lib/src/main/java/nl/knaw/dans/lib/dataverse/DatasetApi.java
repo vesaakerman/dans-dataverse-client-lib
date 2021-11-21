@@ -15,10 +15,10 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import nl.knaw.dans.lib.dataverse.model.Lock;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetPublicationResult;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
 import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
-import nl.knaw.dans.lib.dataverse.model.Lock;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,9 +155,10 @@ public class DatasetApi extends AbstractApi {
     }
 
     /**
-     * See [Dataverse API Guide].
+     * See [Dataverse API Guide] and [code example]
      *
      * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#dataset-locks
+     * [code example]: https://github.com/DANS-KNAW/dans-dataverse-client-lib/blob/master/examples/src/main/java/nl/knaw/dans/lib/dataverse/example/DatasetGetLocks.java
      */
     public DataverseResponse<List<Lock>> getLocks() throws IOException, DataverseException {
         log.trace("getting locks from Dataverse");
@@ -179,6 +180,7 @@ public class DatasetApi extends AbstractApi {
 
     /**
      * The same
+     *
      * @throws IOException
      * @throws DataverseException
      * @throws InterruptedException
@@ -258,7 +260,8 @@ public class DatasetApi extends AbstractApi {
                 log.debug(String.format("Sleeping %d ms before next try..", waitTimeInMilliseconds));
                 try {
                     Thread.sleep(waitTimeInMilliseconds);
-                } catch (InterruptedException e) {
+                }
+                catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
                 return true;
