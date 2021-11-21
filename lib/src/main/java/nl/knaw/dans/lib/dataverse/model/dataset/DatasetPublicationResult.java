@@ -26,6 +26,7 @@ public class DatasetPublicationResult {
     private String publisher;
     private String publicationDate;
     private String storageIdentifier;
+    private String metadataLanguage;
 
     public int getId() {
         return id;
@@ -89,5 +90,13 @@ public class DatasetPublicationResult {
 
     public void setStorageIdentifier(String storageIdentifier) {
         this.storageIdentifier = storageIdentifier;
+    }
+
+    public String getMetadataLanguage() {
+        return metadataLanguage;
+    }
+
+    public void setMetadataLanguage(String metadataLanguage) {
+        this.metadataLanguage = metadataLanguage;
     }
 }

@@ -22,10 +22,21 @@ public class DataFile {
   private String filename;
   private String contentType;
   private long filesize;
+  private String description;
+  private Embargo embargo;
   private String storageIdentifier;
   private int rootDataFileId;
   private Checksum checksum;
   private String creationDate; // TODO why not a DateTime?
+  private int previousDataFileId;
+
+  public int getPreviousDataFileId() {
+    return previousDataFileId;
+  }
+
+  public void setPreviousDataFileId(int previousDataFileId) {
+    this.previousDataFileId = previousDataFileId;
+  }
 
   public String getCreationDate() {
     return creationDate;
@@ -41,6 +52,14 @@ public class DataFile {
 
   public void setChecksum(Checksum checksum) {
     this.checksum = checksum;
+  }
+
+  public Embargo getEmbargo() {
+    return embargo;
+  }
+
+  public void setEmbargo(Embargo embargo) {
+    this.embargo = embargo;
   }
 
   public int getRootDataFileId() {
@@ -65,6 +84,14 @@ public class DataFile {
 
   public void setFilesize(long filesize) {
     this.filesize = filesize;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
   }
 
   public String getContentType() {
