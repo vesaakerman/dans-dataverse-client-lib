@@ -28,6 +28,15 @@ public class DataFile {
   private int rootDataFileId;
   private Checksum checksum;
   private String creationDate; // TODO why not a DateTime?
+  private int previousDataFileId;
+
+  public int getPreviousDataFileId() {
+    return previousDataFileId;
+  }
+
+  public void setPreviousDataFileId(int previousDataFileId) {
+    this.previousDataFileId = previousDataFileId;
+  }
 
   public String getCreationDate() {
     return creationDate;
