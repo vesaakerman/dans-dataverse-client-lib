@@ -157,8 +157,9 @@ public class DatasetApi extends AbstractApi {
     }
 
     /**
-     * @see [[https://guides.dataverse.org/en/latest/api/native-api.html#dataset-locks]]
-     * @return
+     * See [Dataverse API Guide].
+     *
+     * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/native-api.html#dataset-locks
      */
     public DataverseResponse<List<Lock>> getLocks() throws IOException, DataverseException {
         log.trace("getting locks from Dataverse");
@@ -174,7 +175,6 @@ public class DatasetApi extends AbstractApi {
      *
      * @param maxNumberOfRetries     the maximum number the check for unlock is made, defaults to [[awaitLockStateMaxNumberOfRetries]]
      * @param waitTimeInMilliseconds the time between tries, defaults to [[awaitLockStateMillisecondsBetweenRetries]]
-     * @return
      */
     public void awaitUnlock(int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException, InterruptedException {
         log.trace(String.format("awaitUnlock: maxNumberOfRetries %d, waitTimeInMilliseconds %d", maxNumberOfRetries, waitTimeInMilliseconds));
@@ -194,7 +194,6 @@ public class DatasetApi extends AbstractApi {
      * @param lockType               the lock type to wait for
      * @param maxNumberOfRetries     the maximum number the check for unlock is made, defaults to [[awaitLockStateMaxNumberOfRetries]]
      * @param waitTimeInMilliseconds the time between tries, defaults to [[awaitLockStateMillisecondsBetweenRetries]]
-     * @return
      */
     public void awaitLock(String lockType, int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException, InterruptedException {
         log.trace(String.format("awaitLock: lockType %s, maxNumberOfRetries %d, waitTimeInMilliseconds %d", lockType, maxNumberOfRetries, waitTimeInMilliseconds));
@@ -235,7 +234,6 @@ public class DatasetApi extends AbstractApi {
      * @param errorMessage           error to report in LockException if it occurs
      * @param maxNumberOfRetries     the maximum number of tries
      * @param waitTimeInMilliseconds the time to wait between tries
-     * @return
      */
     private void awaitLockState(Locked lockState, String lockType, String errorMessage, int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException, InterruptedException {
         int numberOfTimesTried = 0;
