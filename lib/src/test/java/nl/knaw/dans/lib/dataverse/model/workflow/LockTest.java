@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse.model.workflow;
 
+import nl.knaw.dans.lib.dataverse.model.Lock;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

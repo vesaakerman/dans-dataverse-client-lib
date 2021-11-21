@@ -18,7 +18,7 @@ package nl.knaw.dans.lib.dataverse;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetPublicationResult;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
 import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
-import nl.knaw.dans.lib.dataverse.model.workflow.Lock;
+import nl.knaw.dans.lib.dataverse.model.Lock;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +34,6 @@ public class DatasetApi extends AbstractApi {
 
     private static final Logger log = LoggerFactory.getLogger(DatasetApi.class);
     private static final String persistendId = ":persistentId/";
-    private static final int awaitLockStateMaxNumberOfRetries = 30;
-    private static final int awaitLockStateMillisecondsBetweenRetries = 500;
     private static final String publish = "actions/:publish";
 
     private final Path targetBase;
@@ -163,45 +161,56 @@ public class DatasetApi extends AbstractApi {
      */
     public DataverseResponse<List<Lock>> getLocks() throws IOException, DataverseException {
         log.trace("getting locks from Dataverse");
-        return getUnversionedFromTarget("locks", List.class);
+        return getUnversionedFromTarget("locks", List.class, Lock.class);
     }
 
-
     /**
-     * Utility function that lets you wait until all locks are cleared before proceeding. Unlike most other functions
-     * in this library, this does not correspond directly with an API call. Rather the [[getLocks]] call is done repeatedly
-     * to check if the locks have been cleared. Note that in scenarios where concurrent processes might access the same dataset
-     * it is not guaranteed that the locks, once cleared, stay that way.
+     * Utility function that lets you wait until all locks are cleared before proceeding. Unlike most other functions in this library, this does not correspond directly with an API call. Rather the
+     * {@link #getLocks()} call is done repeatedly to check if the locks have been cleared. Note that in scenarios where concurrent processes might access the same dataset it is not guaranteed that
+     * the locks, once cleared, stay that way.
      *
      * @param maxNumberOfRetries     the maximum number the check for unlock is made, defaults to [[awaitLockStateMaxNumberOfRetries]]
      * @param waitTimeInMilliseconds the time between tries, defaults to [[awaitLockStateMillisecondsBetweenRetries]]
      */
-    public void awaitUnlock(int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException, InterruptedException {
+    public void awaitUnlock(int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException {
         log.trace(String.format("awaitUnlock: maxNumberOfRetries %d, waitTimeInMilliseconds %d", maxNumberOfRetries, waitTimeInMilliseconds));
         awaitLockState(this::notLocked, "", "Wait for unlock expired", maxNumberOfRetries, waitTimeInMilliseconds);
     }
 
-    public void awaitUnlock() throws IOException, DataverseException, InterruptedException {
-        awaitUnlock(awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
+    /**
+     * The same
+     * @throws IOException
+     * @throws DataverseException
+     * @throws InterruptedException
+     */
+    public void awaitUnlock() throws IOException, DataverseException {
+        awaitUnlock(httpClientWrapper.getConfig().getAwaitLockStateMaxNumberOfRetries(), httpClientWrapper.getConfig().getAwaitLockStateMillisecondsBetweenRetries());
     }
 
     /**
-     * Utility function that lets you wait until a specified lock type is set. Unlike most other functions
-     * in this library, this does not correspond directly with an API call. Rather the [[getLocks]] call is done repeatedly
-     * to check if the locks has been set. A use case is when an http/sr workflow wants to make sure that a dataset has been
-     * locked on its behalf, so that it can be sure to have exclusive access via its invocation ID.
+     * Utility function that lets you wait until a specified lock type is set. Unlike most other functions in this library, this does not correspond directly with an API call. Rather the {@link
+     * #getLocks()} call is done repeatedly to check if the locks has been set. A use case is when an http/sr workflow wants to make sure that a dataset has been locked on its behalf, so that it can
+     * be sure to have exclusive access via its invocation ID.
      *
      * @param lockType               the lock type to wait for
-     * @param maxNumberOfRetries     the maximum number the check for unlock is made, defaults to [[awaitLockStateMaxNumberOfRetries]]
+     * @param maxNumberOfRetries     the maximum number the check for unlock is made, defaults to #awawaitLockStateMaxNumberOfRetries
      * @param waitTimeInMilliseconds the time between tries, defaults to [[awaitLockStateMillisecondsBetweenRetries]]
      */
-    public void awaitLock(String lockType, int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException, InterruptedException {
+    public void awaitLock(String lockType, int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException {
         log.trace(String.format("awaitLock: lockType %s, maxNumberOfRetries %d, waitTimeInMilliseconds %d", lockType, maxNumberOfRetries, waitTimeInMilliseconds));
         awaitLockState(this::isLocked, lockType, String.format("Wait for lock of type %s expired", lockType), maxNumberOfRetries, waitTimeInMilliseconds);
     }
 
-    public void awaitLock(String lockType) throws IOException, DataverseException, InterruptedException {
-        awaitLock(lockType, awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
+    /**
+     * The same as {@link #awaitLock(String, int, int)} but with defaults for number of tries and time between tries.
+     *
+     * @param lockType the lock type to wait for
+     * @throws IOException
+     * @throws DataverseException
+     * @throws InterruptedException
+     */
+    public void awaitLock(String lockType) throws IOException, DataverseException {
+        awaitLock(lockType, httpClientWrapper.getConfig().getAwaitLockStateMaxNumberOfRetries(), httpClientWrapper.getConfig().getAwaitLockStateMillisecondsBetweenRetries());
     }
 
     /**
@@ -214,7 +223,7 @@ public class DatasetApi extends AbstractApi {
 
     private Boolean isLocked(List<Lock> locks, String lockType) {
         for (Lock lock : locks) {
-            if (lock.getLockType() == lockType)
+            if (lock.getLockType().equals(lockType))
                 return true;
         }
         return false;
@@ -224,10 +233,9 @@ public class DatasetApi extends AbstractApi {
         return locks.isEmpty();
     }
 
-
     /**
-     * Helper function that waits until the specified lockState function returns `true`, or throws a LockException if this never occurs
-     * within `maxNumberOrRetries` with `waitTimeInMilliseconds` pauses.
+     * Helper function that waits until the specified lockState function returns `true`, or throws a LockException if this never occurs within `maxNumberOrRetries` with `waitTimeInMilliseconds`
+     * pauses.
      *
      * @param lockState              the function that returns whether the required state has been reached
      * @param lockType               type of locking
@@ -235,7 +243,8 @@ public class DatasetApi extends AbstractApi {
      * @param maxNumberOfRetries     the maximum number of tries
      * @param waitTimeInMilliseconds the time to wait between tries
      */
-    private void awaitLockState(Locked lockState, String lockType, String errorMessage, int maxNumberOfRetries, int waitTimeInMilliseconds) throws IOException, DataverseException, InterruptedException {
+    private void awaitLockState(Locked lockState, String lockType, String errorMessage, int maxNumberOfRetries, int waitTimeInMilliseconds)
+        throws IOException, DataverseException {
         int numberOfTimesTried = 0;
 
         class CurrentLocks {
@@ -245,9 +254,13 @@ public class DatasetApi extends AbstractApi {
                 return locks;
             }
 
-            private Boolean slept() throws InterruptedException {
+            private Boolean slept() {
                 log.debug(String.format("Sleeping %d ms before next try..", waitTimeInMilliseconds));
-                Thread.sleep(waitTimeInMilliseconds);
+                try {
+                    Thread.sleep(waitTimeInMilliseconds);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
                 return true;
             }
         }
@@ -257,8 +270,10 @@ public class DatasetApi extends AbstractApi {
         do {
             locks = currentLocks.getCurrentLocks();
             numberOfTimesTried += 1;
-        } while (!lockState.get(locks, lockType) && numberOfTimesTried != maxNumberOfRetries && currentLocks.slept());
+        }
+        while (!lockState.get(locks, lockType) && numberOfTimesTried != maxNumberOfRetries && currentLocks.slept());
 
-        if (!lockState.get(locks, lockType)) throw new RuntimeException(String.format("%s. Number of tries = %d, wait time between tries = %d ms.", errorMessage, maxNumberOfRetries, waitTimeInMilliseconds));
+        if (!lockState.get(locks, lockType))
+            throw new RuntimeException(String.format("%s. Number of tries = %d, wait time between tries = %d ms.", errorMessage, maxNumberOfRetries, waitTimeInMilliseconds));
     }
 }

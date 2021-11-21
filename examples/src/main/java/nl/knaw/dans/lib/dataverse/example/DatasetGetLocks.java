@@ -17,7 +17,7 @@ package nl.knaw.dans.lib.dataverse.example;
 
 import nl.knaw.dans.lib.dataverse.DataverseResponse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
-import nl.knaw.dans.lib.dataverse.model.workflow.Lock;
+import nl.knaw.dans.lib.dataverse.model.Lock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,9 +34,6 @@ public class DatasetGetLocks extends ExampleBase {
          */
 
         String persistentId = args[0];
-        int awaitLockStateMaxNumberOfRetries = Integer.parseInt(args[1]);
-        int awaitLockStateMillisecondsBetweenRetries = Integer.parseInt(args[2]);
-        client.dataset(persistentId).awaitUnlock(awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
 
         for (int i = 0; i < 300; i += 1) {
             DataverseResponse<List<Lock>> response = client.dataset(persistentId).getLocks();
@@ -44,7 +41,7 @@ public class DatasetGetLocks extends ExampleBase {
             log.trace(String.format("Locks: %s", locks));
             if (!locks.isEmpty())
                 log.info(String.format("Dataset is currently locked by: %s", locks));
-            Thread.sleep(50);
+            Thread.sleep(500);
         }
     }
 }

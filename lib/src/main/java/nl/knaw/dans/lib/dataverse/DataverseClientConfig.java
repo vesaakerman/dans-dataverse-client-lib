@@ -20,6 +20,14 @@ import java.net.URI;
 public class DataverseClientConfig {
     private final URI baseUrl;
     private final String apiToken;
+    private int awaitLockStateMaxNumberOfRetries =  30;
+    private int awaitLockStateMillisecondsBetweenRetries = 500;
+
+    public DataverseClientConfig(URI baseUrl, String apiToken, int awaitLockStateMaxNumberOfRetries, int awaitLockStateMillisecondsBetweenRetries) {
+        this(baseUrl, apiToken);
+        this.awaitLockStateMaxNumberOfRetries = awaitLockStateMaxNumberOfRetries;
+        this.awaitLockStateMillisecondsBetweenRetries = awaitLockStateMillisecondsBetweenRetries;
+    }
 
     /**
      * Configuration data for the {@link DataverseClient}.
@@ -38,5 +46,21 @@ public class DataverseClientConfig {
 
     public String getApiToken() {
         return apiToken;
+    }
+
+    public int getAwaitLockStateMaxNumberOfRetries() {
+        return awaitLockStateMaxNumberOfRetries;
+    }
+
+    public void setAwaitLockStateMaxNumberOfRetries(int awaitLockStateMaxNumberOfRetries) {
+        this.awaitLockStateMaxNumberOfRetries = awaitLockStateMaxNumberOfRetries;
+    }
+
+    public int getAwaitLockStateMillisecondsBetweenRetries() {
+        return awaitLockStateMillisecondsBetweenRetries;
+    }
+
+    public void setAwaitLockStateMillisecondsBetweenRetries(int awaitLockStateMillisecondsBetweenRetries) {
+        this.awaitLockStateMillisecondsBetweenRetries = awaitLockStateMillisecondsBetweenRetries;
     }
 }

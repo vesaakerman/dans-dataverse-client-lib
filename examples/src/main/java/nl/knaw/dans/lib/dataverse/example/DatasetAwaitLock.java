@@ -15,31 +15,28 @@
  */
 package nl.knaw.dans.lib.dataverse.example;
 
-import nl.knaw.dans.lib.dataverse.DataverseException;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
 
 public class DatasetAwaitLock extends ExampleBase {
 
     private static final Logger log = LoggerFactory.getLogger(DatasetAwaitLock.class);
 
-    // Notice: Because there are no locks active in this test situation,
-    // this program should always return a message about RuntimeException.
+    /**
+     * The easiest way to test this manually is to create an InReview lock. Other locks will be released to quickly.
+     *
+     * 1. Create a dataset.
+     * 2. Start the program.
+     * 3. Submit the dataset for review.
+     *
+     */
     public static void main(String[] args) throws Exception {
         String persistentId = args[0];
-        int awaitLockStateMaxNumberOfRetries = Integer.parseInt(args[1]);
-        int awaitLockStateMillisecondsBetweenRetries = Integer.parseInt(args[2]);
-        try {
-            client.dataset(persistentId).awaitLock("test", awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
-            log.info("awaitUnLock method executed successfully");
-        } catch (RuntimeException e) {
-            log.error(String.format("awaitLock method threw a RuntimeException: %s", e.getMessage()));
-        }
-        catch (IOException | DataverseException | InterruptedException e) {
-            log.error(String.format("awaitLock method threw an Exception: %s", e.getMessage()));
-        }
+        String lockType = args.length > 1 ? args[1] : "InReview";
+        int awaitLockStateMaxNumberOfRetries = args.length > 2 ? Integer.parseInt(args[2]) : 10;
+        int awaitLockStateMillisecondsBetweenRetries = args.length > 3 ? Integer.parseInt(args[4]) : 2000;
+        client.dataset(persistentId).awaitLock(lockType, awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
+        log.info("A lock of type {} was found", lockType);
     }
 }

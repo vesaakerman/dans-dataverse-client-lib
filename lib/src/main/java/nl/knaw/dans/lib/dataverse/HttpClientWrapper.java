@@ -59,6 +59,10 @@ class HttpClientWrapper implements MediaTypes {
         this.mapper = mapper;
     }
 
+    public DataverseClientConfig getConfig() {
+        return config;
+    }
+
     // TODO: POST multi-part
 
     /*

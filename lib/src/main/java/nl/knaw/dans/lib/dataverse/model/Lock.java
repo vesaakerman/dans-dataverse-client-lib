@@ -13,13 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package nl.knaw.dans.lib.dataverse.model.workflow;
+package nl.knaw.dans.lib.dataverse.model;
 
 public class Lock {
     private String lockType;
     private String date;
     private String user;
     private String message;
+
+    @Override
+    public String toString() {
+        return "Lock{" +
+            "lockType='" + lockType + '\'' +
+            ", date='" + date + '\'' +
+            ", user='" + user + '\'' +
+            ", message='" + message + '\'' +
+            '}';
+    }
 
     public String getLockType() {
         return lockType;
@@ -52,4 +62,6 @@ public class Lock {
     public void setMessage(String message) {
         this.message = message;
     }
+
+
 }

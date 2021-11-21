@@ -19,18 +19,23 @@ import nl.knaw.dans.lib.dataverse.ExampleBase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class DatasetAwaitUnlock extends ExampleBase {
-
     private static final Logger log = LoggerFactory.getLogger(DatasetAwaitUnlock.class);
 
-    // Notice: Because there are no locks active in this test situation,
-    // this program should always return a message about successful execution.
+    /**
+     * The easiest way to test this manually is to create an InReview lock. Other locks will be released to quickly.
+     *
+     * 1. Create a dataset.
+     * 2. Submit the dataset for review.
+     * 3. Log in as a curator or admin.
+     * 4. Start the program.
+     * 5. Publish the dataset.
+     */
     public static void main(String[] args) throws Exception {
         String persistentId = args[0];
-        int awaitLockStateMaxNumberOfRetries = Integer.parseInt(args[1]);
-        int awaitLockStateMillisecondsBetweenRetries = Integer.parseInt(args[2]);
+        int awaitLockStateMaxNumberOfRetries = args.length > 2 ? Integer.parseInt(args[2]) : 10;
+        int awaitLockStateMillisecondsBetweenRetries = args.length > 3 ? Integer.parseInt(args[4]) : 2000;
         client.dataset(persistentId).awaitUnlock(awaitLockStateMaxNumberOfRetries, awaitLockStateMillisecondsBetweenRetries);
-        log.info("awaitUnLock method executed successfully");
+        log.info("All locks on dataset {} were cleared", persistentId);
     }
 }
