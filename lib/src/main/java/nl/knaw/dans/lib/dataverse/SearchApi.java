@@ -96,4 +96,15 @@ public class SearchApi extends AbstractApi {
         return new ResultItemIterator(this, query, searchOptions);
     }
 
+
+    /**
+     * Returns an iterator to all the results for the specified query and default options. The caller is responsible for calling the {@link ResultItem}s to the appropriate subclass.
+     *
+     * @param query         the query to execute
+     * @return an iterator over the results
+     */
+    public Iterator<ResultItem> iterator(String query) {
+        return new ResultItemIterator(this, query, new SearchOptions());
+    }
+
 }
