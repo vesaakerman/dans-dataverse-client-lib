@@ -23,6 +23,14 @@ public class DataverseClientConfig {
     private final int awaitLockStateMaxNumberOfRetries;
     private final int awaitLockStateMillisecondsBetweenRetries;
 
+    /**
+     * Configuration settings for the {@link DataverseClient}.
+     *
+     * @param baseUrl                                  the base URL of the Dataverse server to communicate with
+     * @param apiToken                                 the API token used for authorization
+     * @param awaitLockStateMaxNumberOfRetries         the maximum number of tries for {@link DatasetApi#awaitLock(String)} API (default 30)
+     * @param awaitLockStateMillisecondsBetweenRetries the number or milliseconds to wait between tries for {@link DatasetApi#awaitLock(String)} API (default 500)
+     */
     public DataverseClientConfig(URI baseUrl, String apiToken, int awaitLockStateMaxNumberOfRetries, int awaitLockStateMillisecondsBetweenRetries) {
         this.baseUrl = baseUrl;
         this.apiToken = apiToken;
@@ -31,7 +39,7 @@ public class DataverseClientConfig {
     }
 
     /**
-     * Configuration data for the {@link DataverseClient}.
+     * Configuration settings for the {@link DataverseClient}.
      *
      * @param baseUrl  the base URL of the Dataverse server to communicate with
      * @param apiToken the API token used for authorization
@@ -41,7 +49,7 @@ public class DataverseClientConfig {
     }
 
     /**
-     * Configuration data for the {@link DataverseClient}.
+     * Configuration settings for the {@link DataverseClient}. No API token is specified, so the client will only able to access endpoints that require no account.
      *
      * @param baseUrl the base URL of the Dataverse server to communicate with
      */
