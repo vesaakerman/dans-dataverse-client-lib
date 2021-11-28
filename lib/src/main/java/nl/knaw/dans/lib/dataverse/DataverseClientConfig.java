@@ -20,11 +20,12 @@ import java.net.URI;
 public class DataverseClientConfig {
     private final URI baseUrl;
     private final String apiToken;
-    private int awaitLockStateMaxNumberOfRetries =  30;
-    private int awaitLockStateMillisecondsBetweenRetries = 500;
+    private final int awaitLockStateMaxNumberOfRetries;
+    private final int awaitLockStateMillisecondsBetweenRetries;
 
     public DataverseClientConfig(URI baseUrl, String apiToken, int awaitLockStateMaxNumberOfRetries, int awaitLockStateMillisecondsBetweenRetries) {
-        this(baseUrl, apiToken);
+        this.baseUrl = baseUrl;
+        this.apiToken = apiToken;
         this.awaitLockStateMaxNumberOfRetries = awaitLockStateMaxNumberOfRetries;
         this.awaitLockStateMillisecondsBetweenRetries = awaitLockStateMillisecondsBetweenRetries;
     }
@@ -32,12 +33,20 @@ public class DataverseClientConfig {
     /**
      * Configuration data for the {@link DataverseClient}.
      *
-     * @param baseUrl the base URL of the Dataverse server to communicate with
+     * @param baseUrl  the base URL of the Dataverse server to communicate with
      * @param apiToken the API token used for authorization
      */
     public DataverseClientConfig(URI baseUrl, String apiToken) {
-        this.baseUrl = baseUrl;
-        this.apiToken = apiToken;
+        this(baseUrl, apiToken, 30, 500);
+    }
+
+    /**
+     * Configuration data for the {@link DataverseClient}.
+     *
+     * @param baseUrl the base URL of the Dataverse server to communicate with
+     */
+    public DataverseClientConfig(URI baseUrl) {
+        this(baseUrl, null);
     }
 
     public URI getBaseUrl() {
@@ -48,19 +57,11 @@ public class DataverseClientConfig {
         return apiToken;
     }
 
-    public int getAwaitLockStateMaxNumberOfRetries() {
+    int getAwaitLockStateMaxNumberOfRetries() {
         return awaitLockStateMaxNumberOfRetries;
     }
 
-    public void setAwaitLockStateMaxNumberOfRetries(int awaitLockStateMaxNumberOfRetries) {
-        this.awaitLockStateMaxNumberOfRetries = awaitLockStateMaxNumberOfRetries;
-    }
-
-    public int getAwaitLockStateMillisecondsBetweenRetries() {
+    int getAwaitLockStateMillisecondsBetweenRetries() {
         return awaitLockStateMillisecondsBetweenRetries;
-    }
-
-    public void setAwaitLockStateMillisecondsBetweenRetries(int awaitLockStateMillisecondsBetweenRetries) {
-        this.awaitLockStateMillisecondsBetweenRetries = awaitLockStateMillisecondsBetweenRetries;
     }
 }

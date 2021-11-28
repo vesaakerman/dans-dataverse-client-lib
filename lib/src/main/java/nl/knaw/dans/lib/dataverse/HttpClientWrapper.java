@@ -38,6 +38,7 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -170,7 +171,7 @@ class HttpClientWrapper implements MediaTypes {
     }
 
     private HttpResponse dispatch(HttpUriRequest request) throws IOException, DataverseException {
-        request.setHeader(HEADER_X_DATAVERSE_KEY, config.getApiToken());
+        Optional.ofNullable(config.getApiToken()).ifPresent(token -> request.setHeader(HEADER_X_DATAVERSE_KEY, token));
         HttpResponse r = httpClient.execute(request);
         if (r.getStatusLine().getStatusCode() >= 200 && r.getStatusLine().getStatusCode() < 300)
             return r;

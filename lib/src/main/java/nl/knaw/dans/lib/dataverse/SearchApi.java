@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import nl.knaw.dans.lib.dataverse.model.search.ResultItem;
 import nl.knaw.dans.lib.dataverse.model.search.SearchResult;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -81,6 +83,17 @@ public class SearchApi extends AbstractApi {
         if (options.isShowEntityIds())
             parameters.put("show_entity_ids", Collections.singletonList(Integer.toString(options.getPerPage())));
         return httpClientWrapper.get(subPath, parameters, SearchResult.class);
+    }
+
+    /**
+     * Returns an iterator to all the results for the specified query and options. The caller is responsible for calling the {@link ResultItem}s to the appropriate subclass.
+     *
+     * @param query         the query to execute
+     * @param searchOptions the options for the query
+     * @return an iterator over the results
+     */
+    public Iterator<ResultItem> iterator(String query, SearchOptions searchOptions) {
+        return new ResultItemIterator(this, query, searchOptions);
     }
 
 }

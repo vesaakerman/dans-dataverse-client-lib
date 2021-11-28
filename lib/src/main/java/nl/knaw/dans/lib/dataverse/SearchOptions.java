@@ -20,8 +20,8 @@ import nl.knaw.dans.lib.dataverse.model.search.SearchItemType;
 import java.util.List;
 
 /**
- * Options for searching, such as further narrowing down the result, what to include in the result items and which part of the result to return, and in what order.
- * See [Dataverse API Guide] for details.
+ * Options for searching, such as further narrowing down the result, what to include in the result items and which part of the result to return, and in what order. See [Dataverse API Guide] for
+ * details.
  *
  * [Dataverse API Guide]: https://guides.dataverse.org/en/latest/api/search.html#parameters
  */
@@ -41,6 +41,21 @@ public class SearchOptions {
     private boolean showRelevance;
     private boolean showFacets;
     private boolean showEntityIds;
+
+    public SearchOptions copy() {
+        SearchOptions copy = new SearchOptions();
+        copy.types = this.types;
+        copy.filterQueries = this.filterQueries;
+        copy.subTrees = this.subTrees;
+        copy.sortField = this.sortField;
+        copy.order = this.order;
+        copy.perPage = this.perPage;
+        copy.start = this.start;
+        copy.showRelevance = this.showRelevance;
+        copy.showFacets = this.showFacets;
+        copy.showEntityIds = this.showEntityIds;
+        return copy;
+    }
 
     public List<SearchItemType> getTypes() {
         return types;

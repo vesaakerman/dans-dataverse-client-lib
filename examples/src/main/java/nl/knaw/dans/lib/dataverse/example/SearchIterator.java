@@ -15,7 +15,6 @@
  */
 package nl.knaw.dans.lib.dataverse.example;
 
-import nl.knaw.dans.lib.dataverse.DataverseResponse;
 import nl.knaw.dans.lib.dataverse.ExampleBase;
 import nl.knaw.dans.lib.dataverse.SearchOptions;
 import nl.knaw.dans.lib.dataverse.model.search.DatasetResultItem;
@@ -23,16 +22,16 @@ import nl.knaw.dans.lib.dataverse.model.search.DataverseResultItem;
 import nl.knaw.dans.lib.dataverse.model.search.FileResultItem;
 import nl.knaw.dans.lib.dataverse.model.search.ResultItem;
 import nl.knaw.dans.lib.dataverse.model.search.SearchItemType;
-import nl.knaw.dans.lib.dataverse.model.search.SearchResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SearchFind extends ExampleBase {
-    private static final Logger log = LoggerFactory.getLogger(SearchFind.class);
+public class SearchIterator extends ExampleBase {
+    private static final Logger log = LoggerFactory.getLogger(SearchIterator.class);
 
     public static void main(String[] args) throws Exception {
         // Read command line
@@ -53,12 +52,11 @@ public class SearchFind extends ExampleBase {
         options.setPerPage(perPage);
 
         // Do search
-        DataverseResponse<SearchResult> r = client.search().find(query, options);
+        Iterator<ResultItem> iterator = client.search().iterator(query, options);
 
         // Render result
-        log.info("Response message: {}", r.getEnvelopeAsJson().toPrettyString());
-        SearchResult searchResult = r.getData();
-        for (ResultItem item : searchResult.getItems()) {
+        while (iterator.hasNext()) {
+            ResultItem item = iterator.next();
             log.info("NEXT ITEM");
             log.info("Name: {}", item.getName());
             log.info("Type: {}", item.getType());
