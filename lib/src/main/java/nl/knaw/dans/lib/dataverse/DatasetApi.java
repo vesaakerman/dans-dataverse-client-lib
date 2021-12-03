@@ -36,7 +36,6 @@ import java.util.Map;
 public class DatasetApi extends AbstractApi {
 
     private static final Logger log = LoggerFactory.getLogger(DatasetApi.class);
-    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final String persistendId = ":persistentId/";
     private static final String publish = "actions/:publish";
 
@@ -122,8 +121,8 @@ public class DatasetApi extends AbstractApi {
         log.trace("ENTER");
         HashMap<String, List<String>> queryParams = new HashMap<>();
         if (replace)
-            queryParams.put("replace", Collections.singletonList("true"));
-        return putToTarget("editMetadata", s, queryParams, DatasetVersion.class); // Sic! any value for "replace" is interpreted by Dataverse as "true", even "replace=false"
+            queryParams.put("replace", Collections.singletonList("true"));  // Sic! any value for "replace" is interpreted by Dataverse as "true", even "replace=false"
+        return putToTarget("editMetadata", s, queryParams, DatasetVersion.class);
     }
 
     /**
@@ -136,11 +135,18 @@ public class DatasetApi extends AbstractApi {
      * @return
      */
     public DataverseResponse<DatasetVersion> editMetadata(FieldList fields, Boolean replace) throws IOException, DataverseException {
-        return editMetadata(objectMapper.writeValueAsString(fields), replace);
+        return editMetadata(httpClientWrapper.getObjectMapper().writeValueAsString(fields), replace);
     }
 
+    /**
+     * Edits the current draft's metadata, adding the fields that do not exist yet.
+     *
+     * @see [[https://guides.dataverse.org/en/latest/api/native-api.html#edit-dataset-metadata]]
+     * @param fields  list of fields to edit
+     * @return
+     */
     public DataverseResponse<DatasetVersion> editMetadata(FieldList fields) throws IOException, DataverseException {
-        return editMetadata(objectMapper.writeValueAsString(fields), true);
+        return editMetadata(httpClientWrapper.getObjectMapper().writeValueAsString(fields), true);
     }
 
 
