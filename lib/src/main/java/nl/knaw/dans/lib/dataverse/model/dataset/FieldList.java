@@ -15,28 +15,21 @@
  */
 package nl.knaw.dans.lib.dataverse.model.dataset;
 
-public class PrimitiveSingleValueField extends MetadataField implements SingleValueField {
+import java.util.ArrayList;
+import java.util.List;
 
-    private String value;
+public class FieldList {
+    private List<MetadataField> fields = new ArrayList<>();
 
-    public PrimitiveSingleValueField() {
+    public List<MetadataField> getFields() {
+        return fields;
     }
 
-    public PrimitiveSingleValueField(String typeName, String value) {
-        super("primitive", typeName, false);
-        this.value = value;
+    public void setFields(List<MetadataField> fields) {
+        this.fields = fields;
     }
 
-    public PrimitiveSingleValueField(String typeClass, String typeName, boolean multiple, String value) {
-        super(typeClass, typeName, multiple);
-        this.value = value;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    public void add(PrimitiveSingleValueField field) {
+        fields.add(field);
     }
 }

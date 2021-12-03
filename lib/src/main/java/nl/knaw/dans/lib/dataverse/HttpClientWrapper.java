@@ -97,6 +97,10 @@ class HttpClientWrapper implements MediaTypes {
     /*
      * PUT methods
      */
+    public <D> DataverseHttpResponse<D> put(Path subPath, String s, Map<String, List<String>> parameters, Map<String, String> headers, Class<?>... c) throws IOException, DataverseException {
+        return wrap(putString(subPath, s, "", parameters, headers), c);
+    }
+
     public <D> DataverseHttpResponse<D> putModelObjectAsJson(Path subPath, D modelObject, Class<?>... c) throws IOException, DataverseException {
         return putModelObjectAsJson(subPath, modelObject, new HashMap<>(), new HashMap<>(), c);
     }
@@ -120,7 +124,8 @@ class HttpClientWrapper implements MediaTypes {
 
     private HttpResponse putString(Path subPath, String s, String mediaType, Map<String, List<String>> parameters, Map<String, String> headers) throws IOException, DataverseException {
         HttpPut put = new HttpPut(buildURi(subPath, parameters));
-        put.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
+        if (!mediaType.isEmpty())
+            put.setHeader(HttpHeaders.CONTENT_TYPE, mediaType);
         headers.forEach(put::setHeader);
         put.setEntity(new StringEntity(s));
         return dispatch(put);

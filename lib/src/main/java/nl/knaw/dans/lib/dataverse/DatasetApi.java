@@ -15,9 +15,11 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.knaw.dans.lib.dataverse.model.Lock;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetPublicationResult;
 import nl.knaw.dans.lib.dataverse.model.dataset.DatasetVersion;
+import nl.knaw.dans.lib.dataverse.model.dataset.FieldList;
 import nl.knaw.dans.lib.dataverse.model.file.FileMeta;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -29,10 +31,12 @@ import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatasetApi extends AbstractApi {
 
     private static final Logger log = LoggerFactory.getLogger(DatasetApi.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
     private static final String persistendId = ":persistentId/";
     private static final String publish = "actions/:publish";
 
@@ -93,13 +97,59 @@ public class DatasetApi extends AbstractApi {
         return httpClientWrapper.postJsonString(path, "", parameters, new HashMap<>(), DatasetPublicationResult.class);
     }
 
+    /**
+     * Edits the current draft's metadata, adding the fields that do not exist yet. If `replace` is set to `false`, all specified
+     * fields must be either currently empty or allow multiple values. Replaces existing data.
+     *
+     * @see [[https://guides.dataverse.org/en/latest/api/native-api.html#edit-dataset-metadata]]
+     * @param s JSON document containing the edits to perform
+     * @return
+     */
+    public DataverseResponse<DatasetVersion> editMetadata(String s) throws IOException, DataverseException {
+        return editMetadata(s, true);
+    }
+
+    /**
+     * Edits the current draft's metadata, adding the fields that do not exist yet. If `replace` is set to `false`, all specified
+     * fields must be either currently empty or allow multiple values.
+     *
+     * @see [[https://guides.dataverse.org/en/latest/api/native-api.html#edit-dataset-metadata]]
+     * @param s       JSON document containing the edits to perform
+     * @param replace whether to replace existing values
+     * @return
+     */
+    public DataverseResponse<DatasetVersion> editMetadata(String s, Boolean replace) throws IOException, DataverseException {
+        log.trace("ENTER");
+        HashMap<String, List<String>> queryParams = new HashMap<>();
+        if (replace)
+            queryParams.put("replace", Collections.singletonList("true"));
+        return putToTarget("editMetadata", s, queryParams, DatasetVersion.class); // Sic! any value for "replace" is interpreted by Dataverse as "true", even "replace=false"
+    }
+
+    /**
+     * Edits the current draft's metadata, adding the fields that do not exist yet. If `replace` is set to `false`, all specified
+     * fields must be either currently empty or allow multiple values.
+     *
+     * @see [[https://guides.dataverse.org/en/latest/api/native-api.html#edit-dataset-metadata]]
+     * @param fields  list of fields to edit
+     * @param replace whether to replace existing values
+     * @return
+     */
+    public DataverseResponse<DatasetVersion> editMetadata(FieldList fields, Boolean replace) throws IOException, DataverseException {
+        return editMetadata(objectMapper.writeValueAsString(fields), replace);
+    }
+
+    public DataverseResponse<DatasetVersion> editMetadata(FieldList fields) throws IOException, DataverseException {
+        return editMetadata(objectMapper.writeValueAsString(fields), true);
+    }
+
+
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#export-metadata-of-a-dataset-in-various-formats
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#schema-org-json-ld
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#view-dataset-files-and-folders-as-a-directory-index
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-all-metadata-blocks-for-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#list-single-metadata-block-for-a-dataset
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#update-metadata-for-a-dataset
-    // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#edit-dataset-metadata
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-dataset-metadata
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#delete-dataset-draft
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#set-citation-date-field-type-for-a-dataset
@@ -142,15 +192,33 @@ public class DatasetApi extends AbstractApi {
         }
     }
 
-    private <D> DataverseHttpResponse<D> getUnversionedFromTarget(String endPoint, Class<?>... outputClass) throws IOException, DataverseException {
+    private <D> DataverseHttpResponse<D> getUnversionedFromTarget(String endPoint, Map<String, List<String>> queryParams, Class<?>... outputClass) throws IOException, DataverseException {
         log.trace("ENTER");
         if (isPersistentId) {
             HashMap<String, List<String>> parameters = new HashMap<>();
             parameters.put("persistentId", Collections.singletonList(id));
+            parameters.putAll(queryParams);
             return httpClientWrapper.get(buildPath(targetBase, persistendId, endPoint), parameters, outputClass);
         }
         else {
             return httpClientWrapper.get(buildPath(targetBase, id, endPoint), outputClass);
+        }
+    }
+
+    private <D> DataverseHttpResponse<D> getUnversionedFromTarget(String endPoint, Class<?>... outputClass) throws IOException, DataverseException {
+        return getUnversionedFromTarget(endPoint, Collections.emptyMap(), outputClass);
+    }
+
+
+    private <D> DataverseResponse<D> putToTarget(String endPoint, String body, Map<String, List<String>> queryParams, Class<?>... outputClass) throws IOException, DataverseException {
+        log.trace("ENTER");
+        if (isPersistentId) {
+            HashMap<String, List<String>> parameters = new HashMap<>();
+            parameters.put("persistentId", Collections.singletonList(id));
+            parameters.putAll(queryParams);
+            return httpClientWrapper.put(buildPath(targetBase, persistendId, endPoint), body, parameters, Collections.emptyMap(), outputClass);
+        } else {
+            return httpClientWrapper.put(buildPath(targetBase, id, endPoint), body, queryParams, Collections.emptyMap(), outputClass);
         }
     }
 
