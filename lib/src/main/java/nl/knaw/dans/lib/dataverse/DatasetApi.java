@@ -221,9 +221,9 @@ public class DatasetApi extends AbstractApi {
             HashMap<String, List<String>> parameters = new HashMap<>();
             parameters.put("persistentId", Collections.singletonList(id));
             parameters.putAll(queryParams);
-            return httpClientWrapper.put(buildPath(targetBase, persistendId, endPoint), body, parameters, Collections.emptyMap(), outputClass);
+            return httpClientWrapper.putJsonString(buildPath(targetBase, persistendId, endPoint), body, parameters, Collections.emptyMap(), outputClass);
         } else {
-            return httpClientWrapper.put(buildPath(targetBase, id, endPoint), body, queryParams, Collections.emptyMap(), outputClass);
+            return httpClientWrapper.putJsonString(buildPath(targetBase, id, endPoint), body, queryParams, Collections.emptyMap(), outputClass);
         }
     }
 

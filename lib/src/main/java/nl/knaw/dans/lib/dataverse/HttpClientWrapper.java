@@ -101,10 +101,6 @@ class HttpClientWrapper implements MediaTypes {
     /*
      * PUT methods
      */
-    public <D> DataverseHttpResponse<D> put(Path subPath, String s, Map<String, List<String>> parameters, Map<String, String> headers, Class<?>... c) throws IOException, DataverseException {
-        return wrap(putString(subPath, s, APPLICATION_JSON, parameters, headers), c);
-    }
-
     public <D> DataverseHttpResponse<D> putModelObjectAsJson(Path subPath, D modelObject, Class<?>... c) throws IOException, DataverseException {
         return putModelObjectAsJson(subPath, modelObject, new HashMap<>(), new HashMap<>(), c);
     }
