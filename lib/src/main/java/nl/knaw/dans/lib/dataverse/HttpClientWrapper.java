@@ -15,6 +15,7 @@
  */
 package nl.knaw.dans.lib.dataverse;
 
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpResponse;
@@ -58,10 +59,15 @@ class HttpClientWrapper implements MediaTypes {
         this.config = config;
         this.httpClient = httpClient;
         this.mapper = mapper;
+        this.mapper.getFactory().configure(JsonWriteFeature.ESCAPE_NON_ASCII.mappedFeature(), true);
     }
 
     public DataverseClientConfig getConfig() {
         return config;
+    }
+
+    public ObjectMapper getObjectMapper() {
+        return mapper;
     }
 
     // TODO: POST multi-part

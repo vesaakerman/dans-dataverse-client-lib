@@ -1,0 +1,10 @@
+{
+  "fields": [
+    {
+      "typeName": "title",
+      "multiple": false,
+      "typeClass": "primitive",
+      "value": "Test"
+    }
+  ]
+}
