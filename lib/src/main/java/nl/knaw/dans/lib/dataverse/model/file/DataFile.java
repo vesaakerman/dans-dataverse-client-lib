@@ -15,6 +15,8 @@
  */
 package nl.knaw.dans.lib.dataverse.model.file;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class DataFile {
   private int   id;
   private String persistentId;
@@ -29,7 +31,7 @@ public class DataFile {
   private String originalFormatLabel;
   private Long originalFileSize;
   private String originalFileName;
-  private String UNF;
+  private String unf;
   private int rootDataFileId;
   private Checksum checksum;
   private String creationDate; // TODO why not a DateTime?
@@ -139,12 +141,14 @@ public class DataFile {
     this.id = id;
   }
 
-  public String getUNF() {
-    return UNF;
+  @JsonProperty("UNF")
+  public String getUnf() {
+    return unf;
   }
 
-  public void setUNF(String UNF) {
-    this.UNF = UNF;
+  @JsonProperty("UNF")
+  public void setUnf(String unf) {
+    this.unf = unf;
   }
 
   public String getOriginalFileName() {
