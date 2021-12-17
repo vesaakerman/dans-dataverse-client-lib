@@ -81,7 +81,6 @@ public class MetadataFieldDeserializer extends StdDeserializer {
                 return new ControlledMultiValueField(
                     typeClass,
                     typeName,
-                    true,
                     StreamSupport.stream(jsonNodeIterable.spliterator(), false)
                         .map(JsonNode::asText).collect(Collectors.toList()));
             }
@@ -89,7 +88,6 @@ public class MetadataFieldDeserializer extends StdDeserializer {
                 return new ControlledSingleValueField(
                     typeClass,
                     typeName,
-                    false,
                     valueNode.asText());
             }
         }
