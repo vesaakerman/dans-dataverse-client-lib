@@ -23,8 +23,8 @@ public class PrimitiveMultiValueField extends MetadataField {
     public PrimitiveMultiValueField() {
     }
 
-    public PrimitiveMultiValueField(String typeClass, String typeName, boolean multiple, List<String> value) {
-        super(typeClass, typeName, multiple);
+    public PrimitiveMultiValueField(String typeClass, String typeName, List<String> value) {
+        super(typeClass, typeName, true);
         this.value = value;
     }
 

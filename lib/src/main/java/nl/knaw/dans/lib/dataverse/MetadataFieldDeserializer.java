@@ -62,7 +62,6 @@ public class MetadataFieldDeserializer extends StdDeserializer {
                 return new PrimitiveMultiValueField(
                     typeClass,
                     typeName,
-                    true,
                     StreamSupport.stream(jsonNodeIterable.spliterator(), false)
                         .map(JsonNode::asText).collect(Collectors.toList()));
             }
@@ -70,7 +69,6 @@ public class MetadataFieldDeserializer extends StdDeserializer {
                 return new PrimitiveSingleValueField(
                     typeClass,
                     typeName,
-                    false,
                     valueNode.asText());
             }
         }
