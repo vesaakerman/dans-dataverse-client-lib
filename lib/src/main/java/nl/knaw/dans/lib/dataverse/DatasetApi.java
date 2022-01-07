@@ -30,7 +30,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class DatasetApi extends AbstractApi {
-    Map<String, String> extraHeaders = new HashMap<>();
+    private static final Map<String, String> extraHeaders = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(DatasetApi.class);
     private static final String persistendId = ":persistentId/";
     private static final String publish = "actions/:publish";
