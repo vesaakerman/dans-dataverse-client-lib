@@ -27,13 +27,10 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DatasetApi extends AbstractApi {
-
+    Map<String, String> extraHeaders = new HashMap<>();
     private static final Logger log = LoggerFactory.getLogger(DatasetApi.class);
     private static final String persistendId = ":persistentId/";
     private static final String publish = "actions/:publish";
@@ -42,11 +39,14 @@ public class DatasetApi extends AbstractApi {
     private final String id;
     private final boolean isPersistentId;
 
-    protected DatasetApi(HttpClientWrapper httpClientWrapper, String id, boolean isPersistentId) {
+    protected DatasetApi(HttpClientWrapper httpClientWrapper, String id, String workflowId, boolean isPersistentId) {
         super(httpClientWrapper);
         this.targetBase = Paths.get("api/datasets/");
         this.id = id;
         this.isPersistentId = isPersistentId;
+        if (!workflowId.isEmpty()) {
+            extraHeaders.put("X-Dataverse-invocationID", workflowId);
+        }
     }
 
     // TODO: https://guides.dataverse.org/en/latest/api/native-api.html#get-json-representation-of-a-dataset
@@ -92,7 +92,7 @@ public class DatasetApi extends AbstractApi {
         HashMap<String, List<String>> parameters = new HashMap<>();
         parameters.put("persistentId", Collections.singletonList(id));
         parameters.put("type", Collections.singletonList("major"));
-        return httpClientWrapper.postJsonString(path, "", parameters, new HashMap<>(), DatasetPublicationResult.class);
+        return httpClientWrapper.postJsonString(path, "", parameters, extraHeaders, DatasetPublicationResult.class);
     }
 
     /**
@@ -229,9 +229,9 @@ public class DatasetApi extends AbstractApi {
             HashMap<String, List<String>> parameters = new HashMap<>();
             parameters.put("persistentId", Collections.singletonList(id));
             parameters.putAll(queryParams);
-            return httpClientWrapper.putJsonString(buildPath(targetBase, persistendId, endPoint), body, parameters, Collections.emptyMap(), outputClass);
+            return httpClientWrapper.putJsonString(buildPath(targetBase, persistendId, endPoint), body, parameters, extraHeaders, outputClass);
         } else {
-            return httpClientWrapper.putJsonString(buildPath(targetBase, id, endPoint), body, queryParams, Collections.emptyMap(), outputClass);
+            return httpClientWrapper.putJsonString(buildPath(targetBase, id, endPoint), body, queryParams, extraHeaders, outputClass);
         }
     }
 

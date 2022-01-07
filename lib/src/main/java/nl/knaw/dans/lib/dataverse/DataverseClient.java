@@ -67,8 +67,12 @@ public class DataverseClient {
         return new WorkflowsApi(httpClientWrapper);
     }
 
+    public DatasetApi dataset(String pid, String workflowId) {
+        return new DatasetApi(httpClientWrapper, pid, workflowId, true);
+    }
+
     public DatasetApi dataset(String pid) {
-        return new DatasetApi(httpClientWrapper, pid, true);
+        return dataset(pid, "");
     }
 
     public DataverseApi dataverse(String alias) {
